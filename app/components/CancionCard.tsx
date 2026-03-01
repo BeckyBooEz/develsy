@@ -19,16 +19,28 @@ interface CancionCardProps {
 
 export default function CancionCard({ cancion }: CancionCardProps) {
     return (
-        <div className="flex flex-col items-center" >
-            <Image src={cancion["Portada Spotify"]} alt="PortadaSpotify" width={40} height={40} />
-            <p>{cancion["Canción"]}</p>
-            <p>{cancion["Álbum"]}</p>
-            <p>{cancion["Artista"]}</p>
-            <p>{cancion["Reproducciones Totales"]}</p>
-            <p>{cancion["Minutos Reproducidos"]}</p>
-            <p>{cancion["Duración (min)"]}</p>
-            <p>{cancion["Popularidad"]}</p>
-            <a href={cancion["Spotify Link"]}>Escuchar</a>
-        </div >
-    )
+        <div className="border rounded-lg shadow p-4 flex flex-col gap-2">
+            <div className="w-full">
+                <Image
+                    src={cancion["Portada Spotify"]}
+                    alt="PortadaSpotify"
+                    width={300}
+                    height={300}
+                    className="w-full h-auto rounded-md"
+                />
+            </div>
+            <div className="text-center">
+
+                <p className="font-bold">{cancion["Canción"]}</p>
+                <p className="text-gray-600">{cancion["Álbum"]}</p>
+                <p>{cancion["Artista"]}</p>
+                <p>Reproducciones: {cancion["Reproducciones Totales"]}</p>
+                <p>Minutos: {cancion["Minutos Reproducidos"]}</p>
+                <p>Duración: {cancion["Duración (min)"]}</p>
+                <p>Popularidad: {cancion["Popularidad"]}</p>
+                <a href={cancion["Spotify Link"]} className="text-green-600 font-semibold"
+                >Escuchar</a>
+            </div>
+        </div>
+    );
 }
