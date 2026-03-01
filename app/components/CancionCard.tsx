@@ -13,9 +13,13 @@ export interface Cancion {
     "Spotify Link": string,
 }
 
-export default function CancionCard({ cancion }: { cancion: Cancion }) {
+interface CancionCardProps {
+    cancion: Cancion;
+}
+
+export default function CancionCard({ cancion }: CancionCardProps) {
     return (
-        <div>
+        <div className="flex flex-col items-center" >
             <Image src={cancion["Portada Spotify"]} alt="PortadaSpotify" width={40} height={40} />
             <p>{cancion["Canción"]}</p>
             <p>{cancion["Álbum"]}</p>
@@ -25,6 +29,6 @@ export default function CancionCard({ cancion }: { cancion: Cancion }) {
             <p>{cancion["Duración (min)"]}</p>
             <p>{cancion["Popularidad"]}</p>
             <a href={cancion["Spotify Link"]}>Escuchar</a>
-        </div>
+        </div >
     )
 }
