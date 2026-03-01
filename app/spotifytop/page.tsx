@@ -1,7 +1,7 @@
 import { Cancion } from "../components/CancionCard";
 import CancionContainer from "../components/CancionContainer"
 import Header from "../components/Header"
-import cancionesJson from "../data/DataCore.json"
+import cancionesJson from "../data/DataFull.json"
 const canciones: Cancion[] = cancionesJson;
 
 

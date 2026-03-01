@@ -34,10 +34,10 @@ export default function CancionCard({ cancion }: CancionCardProps) {
                 <p className="font-bold">{cancion["Canción"]}</p>
                 <p className="text-gray-600">{cancion["Álbum"]}</p>
                 <p>{cancion["Artista"]}</p>
+                <p>Duración: {cancion["Duración (min)"]}</p>
                 <p>Reproducciones: {cancion["Reproducciones Totales"]}</p>
                 <p>Minutos: {cancion["Minutos Reproducidos"]}</p>
-                <p>Duración: {cancion["Duración (min)"]}</p>
-                <p>Popularidad: {cancion["Popularidad"]}</p>
+                <p>Popularidad: {cancion["Popularidad"]}/100</p>
                 <a href={cancion["Spotify Link"]} className="text-green-600 font-semibold"
                 >Escuchar</a>
             </div>

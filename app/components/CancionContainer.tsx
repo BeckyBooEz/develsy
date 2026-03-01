@@ -8,7 +8,7 @@ interface cancionContainerProps {
 }
 
 export default function CancionContainer({ canciones }: cancionContainerProps) {
-    const [filtro, setFiltro] = useState("");
+    const [filtro, setFiltro] = useState("Antes de ameri");
 
     const cancionesFiltradas = canciones.filter((cancion) =>
         cancion.Artista.toLowerCase().includes(filtro.toLowerCase())
@@ -22,7 +22,7 @@ export default function CancionContainer({ canciones }: cancionContainerProps) {
                 placeholder="Buscar"
                 value={filtro}
                 onChange={(e) => setFiltro(e.target.value)} />
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-4">
                 {cancionesFiltradas.map((cancion, idx) => (
                     <CancionCard key={idx} cancion={cancion} />
                 ))}
