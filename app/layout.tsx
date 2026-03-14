@@ -11,7 +11,9 @@ export const metadata: Metadata = {
     siteName: "Develsy",
     images: [
       {
-        url: "/img/64x64_Black.png",
+        url: "/img/OpenGraph.png",
+        width: 1080,
+        height: 1080,
       },
     ],
     type: "website",
