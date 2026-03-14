@@ -1,4 +1,5 @@
 import { Curriculum } from "../data/micv"
+import Image from "next/image"
 
 interface Props {
     miCV: Curriculum
@@ -8,11 +9,16 @@ export default function CurriculumArturo({ miCV }: Props) {
     return (
         <div>
             <div>
-                <p>{miCV.nombre}</p>
-                <p>{miCV.profesion}</p>
-                <p>{miCV.correo}</p>
-                <p>{miCV.telefono}</p>
-                <p>{miCV.resumen}</p>
+                <div>
+                    <Image src={"/img/perfilarturo.webp"} alt="FotoPerfil" width={100} height={100}></Image>
+                </div>
+                <div>
+                    <p>{miCV.nombre}</p>
+                    <p>{miCV.profesion}</p>
+                    <p>{miCV.correo}</p>
+                    <p>{miCV.telefono}</p>
+                    <p>{miCV.resumen}</p>
+                </div>
             </div>
             <div>
                 <p>Educación</p>
