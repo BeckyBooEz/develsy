@@ -21,13 +21,11 @@ export default function CancionCard({ cancion }: CancionCardProps) {
     return (
         <div className="border rounded-lg shadow p-4 flex flex-col gap-2">
             <div className="w-full">
-                <Image
+                <img
                     src={cancion["Portada Spotify"]}
-                    alt="PortadaSpotify"
+                    alt=""
                     width={300}
-                    height={300}
-                    className="w-full h-auto rounded-md"
-                />
+                    height={300} />
             </div>
             <div className="text-center">
 

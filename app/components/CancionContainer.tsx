@@ -8,7 +8,7 @@ interface cancionContainerProps {
 }
 
 export default function CancionContainer({ canciones }: cancionContainerProps) {
-    const [filtro, setFiltro] = useState("Antes de ameri");
+    const [filtro, setFiltro] = useState("");
 
     const cancionesFiltradas = canciones.filter((cancion) =>
         cancion.Artista.toLowerCase().includes(filtro.toLowerCase())
