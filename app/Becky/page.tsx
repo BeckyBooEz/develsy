@@ -1,11 +1,10 @@
-import CurriculumArturo from "../components/CurriculumArturo";
-import { miCV } from "../data/micv";
-import Image from "next/image";
+import CurriculumContainer from "../containers/CurriculumContainer";
+import { miCV } from "../data/DataCv";
 
 export default function pruebasbecky() {
     return (
         <div>
-            <CurriculumArturo miCV={miCV} />
+            <CurriculumContainer DataCv={miCV} />
         </div>
     )
 }

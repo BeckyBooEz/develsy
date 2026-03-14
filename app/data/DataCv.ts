@@ -1,28 +1,23 @@
 export interface Curriculum {
+    perfil: Perfil
+    educacion: Educacion[]
+    experiencias: Experiencias[]
+    habilidades: Habilidades
+}
+
+export interface Perfil {
     nombre: string
     profesion: string
     correo: string
     telefono: string
     ubicacion: string
     resumen: string
-
-    educacion: Educacion[]
-    experiencia: Experiencias[]
-    idiomas: Idiomas[]
-
-    habilidadesblandas: string[]
-    habilidaesDuras: HabDuras[]
 }
 
 export interface Educacion {
     escuela: string
     nivel: string
     fechas: string
-}
-
-export interface Idiomas {
-    lengua: string
-    nivel: string
 }
 
 export interface Experiencias {
@@ -32,26 +27,40 @@ export interface Experiencias {
     funciones: string[]
 }
 
-export interface HabDuras {
+export interface Habilidades {
+    idiomas: Idiomas[]
+    blandas: string[]
+    duras: Duras[]
+}
+
+export interface Idiomas {
+    lengua: string
+    nivel: string
+}
+
+export interface Duras {
     habilidad: string
     nivel: string
 }
 
 export const miCV: Curriculum = {
-    nombre: "Arturo Miranda",
-    profesion: "Licenciatura En Contaduría Pública",
-    correo: "Arturo.Miranda.Dev@gmail.com",
-    telefono: "+52 232 220 86 35",
-    ubicacion: "Ciudad de México, México",
-    resumen: "Soy una persona autodidacta",
+    perfil: {
+        nombre: "Arturo Miranda",
+        profesion: "Licenciatura En Contaduría Pública",
+        correo: "Arturo.Miranda.Dev@gmail.com",
+        telefono: "+52 232 220 86 35",
+        ubicacion: "Ciudad de México, México",
+        resumen: "Soy una persona autodidacta",
+    },
     educacion: [
         {
             escuela: "Benemerita Universidad Autonoma de Puebla",
             nivel: "Universidad",
-            fechas: "2021-2025"
-        }
-    ],
-    experiencia: [
+            fechas: "2021-2025",
+        },
+    ]
+    ,
+    experiencias: [
         {
             entidad: "H. Ayuntamiento de Zacapoaxtla",
             puesto: "Servicio Social y Practicas Profesionales",
@@ -79,24 +88,26 @@ export const miCV: Curriculum = {
             ]
         }
     ],
-    idiomas: [
-        {
-            lengua: "Ingles",
-            nivel: "A2"
-        }
-    ],
-    habilidadesblandas: [
-        "Liderazgo",
-        "Escucha activa"
-    ],
-    habilidaesDuras: [
-        {
-            habilidad: "excel",
-            nivel: "Intermadio"
-        },
-        {
-            habilidad: "Python",
-            nivel: "Bajo"
-        }
-    ]
+    habilidades: {
+        idiomas: [
+            {
+                lengua: "Ingles",
+                nivel: "A2"
+            }
+        ],
+        blandas: [
+            "Liderazgo",
+            "Escucha activa",
+        ],
+        duras: [
+            {
+                habilidad: "excel",
+                nivel: "Intermadio"
+            },
+            {
+                habilidad: "Python",
+                nivel: "Bajo"
+            }
+        ]
+    }
 }
