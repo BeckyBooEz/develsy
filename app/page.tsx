@@ -5,10 +5,10 @@ export default function Home() {
     <main>
       <h1>Pagína de inicio Develsy</h1>
       <div>
-        <Link className="underline" href={"/Becky"}>BeckyBooEz</Link>
+        <Link className="underline" href={"/becky"}>BeckyBooEz</Link>
       </div>
       <div>
-        <Link className="underline" href={"/SpotifyTop"}>Spotify Top</Link>
+        <Link className="underline" href={"/spotifytop"}>Spotify Top</Link>
       </div>
     </main>
   );
