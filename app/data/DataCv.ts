@@ -47,18 +47,23 @@ export interface Duras {
 export const DataCv: Curriculum[] = [{
     id: "AMD",
     perfil: {
-        nombre: "Arturo Miranda",
-        profesion: "Licenciatura En Contaduría Pública",
+        nombre: "Arturo Miranda Del carmen",
+        profesion: "Licenciatura En Contaduría Pública y Auditoría",
         correo: "Arturo.Miranda.Dev@gmail.com",
         telefono: "+52 232 220 86 35",
-        ubicacion: "Ciudad de México, México",
-        resumen: "Soy una persona autodidacta",
+        ubicacion: "Ciudad de México, México.",
+        resumen: "Soy una persona autodidacta y curiosa, siempre explorando nuevas formas de aprender y mejorar lo que hago. Disfruto investigar, experimentar con herramientas y encontrar maneras más simples y eficientes de resolver problemas. Me apasiona el aprendizaje continuo y el desarrollo constante de nuevas habilidades.",
     },
     educacion: [
         {
             escuela: "Benemerita Universidad Autonoma de Puebla",
             nivel: "Universidad",
             fechas: "2021-2025",
+        },
+        {
+            escuela: "Centro de Estudios Tecnológicos Industrial y de Servicios No. 145",
+            nivel: "Preparatoria",
+            fechas: "2017-2021",
         },
     ]
     ,
