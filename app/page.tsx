@@ -4,7 +4,12 @@ export default function Home() {
   return (
     <main>
       <h1>Pagína de inicio Develsy</h1>
-      <Link href={"/Becky"}>BeckyBooEz</Link>
+      <div>
+        <Link className="underline" href={"/Becky"}>BeckyBooEz</Link>
+      </div>
+      <div>
+        <Link className="underline" href={"/SpotifyTop"}>Spotify Top</Link>
+      </div>
     </main>
   );
 }

@@ -1,4 +1,5 @@
 export interface Curriculum {
+    id: string
     perfil: Perfil
     educacion: Educacion[]
     experiencias: Experiencias[]
@@ -43,7 +44,8 @@ export interface Duras {
     nivel: string
 }
 
-export const miCV: Curriculum = {
+export const DataCv: Curriculum[] = [{
+    id: "AMD",
     perfil: {
         nombre: "Arturo Miranda",
         profesion: "Licenciatura En Contaduría Pública",
@@ -110,4 +112,95 @@ export const miCV: Curriculum = {
             }
         ]
     }
-}
+}, {
+    id: "LRM",
+    perfil: {
+        nombre: "Luis Ricardo Méndez",
+        profesion: "Ingeniero en Software y Analista de Datos",
+        correo: "luis.mendez.falso@gmail.com",
+        telefono: "+52 555 987 6543",
+        ubicacion: "Guadalajara, México",
+        resumen: "Soy un profesional con experiencia en desarrollo de software, análisis de datos y gestión de proyectos tecnológicos. Me enfoco en soluciones eficientes y en mejorar procesos mediante automatización y análisis estratégico."
+    },
+    educacion: [
+        {
+            escuela: "Universidad de Guadalajara",
+            nivel: "Licenciatura en Ingeniería en Sistemas Computacionales",
+            fechas: "2016-2020"
+        },
+        {
+            escuela: "Universidad Panamericana",
+            nivel: "Maestría en Inteligencia Artificial",
+            fechas: "2021-2023"
+        },
+        {
+            escuela: "Coursera / Udemy",
+            nivel: "Certificaciones Online",
+            fechas: "2020-2023"
+        }
+    ],
+    experiencias: [
+        {
+            entidad: "TechSolutions S.A. de C.V.",
+            puesto: "Desarrollador Full Stack",
+            fechas: "2020-2022",
+            funciones: [
+                "Desarrollo de aplicaciones web con React y Node.js",
+                "Implementación de API REST y GraphQL",
+                "Mantenimiento y optimización de bases de datos PostgreSQL y MongoDB",
+                "Colaboración en proyectos ágiles con Scrum",
+                "Documentación y control de versiones usando Git"
+            ]
+        },
+        {
+            entidad: "DataAnalytics MX",
+            puesto: "Analista de Datos Senior",
+            fechas: "2022-2024",
+            funciones: [
+                "Extracción y limpieza de datos masivos",
+                "Creación de dashboards en Power BI y Tableau",
+                "Automatización de procesos de reporteo con Python",
+                "Aplicación de técnicas de machine learning para análisis predictivo",
+                "Análisis de KPIs y reportes para la dirección estratégica",
+                "Auditoría interna de calidad de datos"
+            ]
+        },
+        {
+            entidad: "FinTech Innovators",
+            puesto: "Consultor de Procesos Tecnológicos",
+            fechas: "2024-Actualmente",
+            funciones: [
+                "Evaluación y mejora de procesos internos mediante software",
+                "Integración de herramientas de automatización",
+                "Asesoría en transformación digital",
+                "Capacitación de equipos en nuevas tecnologías",
+                "Gestión de proyectos bajo metodologías ágiles"
+            ]
+        }
+    ],
+    habilidades: {
+        idiomas: [
+            { lengua: "Inglés", nivel: "C1" },
+            { lengua: "Español", nivel: "Nativo" },
+            { lengua: "Francés", nivel: "A2" }
+        ],
+        blandas: [
+            "Liderazgo",
+            "Comunicación efectiva",
+            "Resolución de problemas",
+            "Trabajo en equipo",
+            "Pensamiento estratégico"
+        ],
+        duras: [
+            { habilidad: "Python", nivel: "Avanzado" },
+            { habilidad: "Excel", nivel: "Avanzado" },
+            { habilidad: "SQL", nivel: "Avanzado" },
+            { habilidad: "React.js", nivel: "Intermedio" },
+            { habilidad: "Node.js", nivel: "Intermedio" },
+            { habilidad: "Power BI", nivel: "Intermedio" },
+            { habilidad: "Machine Learning", nivel: "Intermedio" },
+            { habilidad: "Git", nivel: "Intermedio" },
+            { habilidad: "Docker", nivel: "Básico" }
+        ]
+    }
+}]

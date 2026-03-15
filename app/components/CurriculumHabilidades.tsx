@@ -6,31 +6,36 @@ interface Props {
 
 export default function CurriculumHabilidades({ habilidades }: Props) {
     return (
-        <div>
-            <div>
-                <h1>Habilidades</h1>
-                <h2>Blandas</h2>
-                {habilidades.blandas.map((blanda, index) => (
-                    <p key={index}>{blanda}</p>
-                ))}
-                <h2>Duras</h2>
-                {habilidades.duras.map((dura, index) => (
-                    <div key={index}>
-                        <p>{dura.habilidad}</p>
-                        <p>{dura.nivel}</p>
-                    </div>
-                ))}
+        <main>
+            <h1>Habilidades</h1>
+            <div className="flex justify-baseline">
+                <section>
+                    <h2>Blandas</h2>
+                    <ul>
+                        {habilidades.blandas.map((habilidad, index) => (
+                            <li key={index}>{habilidad}</li>
+                        ))}
+                    </ul>
+                </section>
+                <section>
+                    <h2>Duras</h2>
+                    <ul>
+                        {habilidades.duras.map((dura, index) => (
+                            <li key={index}>{dura.habilidad} - {dura.nivel}</li>
+                        ))}
+                    </ul>
+                </section>
             </div>
-            <div>
-                <h1>Idiomas</h1>
-                {habilidades.idiomas.map((idioma, index) => (
-                    <div key={index}>
-                        <p>{idioma.lengua}</p>
-                        <p>{idioma.nivel}</p>
-                    </div>
-                ))}
-            </div>
-        </div>
-
+            <h2>Idiomas</h2>
+            <section>
+                <ul className="flex gap-7">
+                    {habilidades.idiomas.map((idioma, index) => (
+                        <li key={index}>
+                            {idioma.lengua} - {idioma.nivel}
+                        </li>
+                    ))}
+                </ul>
+            </section>
+        </main >
     )
 }
