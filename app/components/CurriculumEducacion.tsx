@@ -13,6 +13,7 @@ export default function CurriculumEducacion({ educacion }: Props) {
                     <div key={index}>
                         <p >{instituto.escuela}</p>
                         <p >{instituto.nivel}</p>
+                        <p>{instituto.titulo}</p>
                         <p >{instituto.fechas}</p>
                     </div>
                 ))}

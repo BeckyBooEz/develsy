@@ -18,6 +18,7 @@ export interface Perfil {
 export interface Educacion {
     escuela: string
     nivel: string
+    titulo: string
     fechas: string
 }
 
@@ -57,13 +58,15 @@ export const DataCv: Curriculum[] = [
         },
         educacion: [
             {
-                escuela: "Benemerita Universidad Autonoma de Puebla",
+                escuela: "Benemerita Universidad Autonoma de Puebla.",
                 nivel: "Universidad",
+                titulo: "Licenciatura en Contaduría Pública y Auditoría.",
                 fechas: "2021-2025",
             },
             {
-                escuela: "Centro de Estudios Tecnológicos Industrial y de Servicios No. 145",
+                escuela: "Centro de Estudios Tecnológicos Industrial y de Servicios No. 145.",
                 nivel: "Preparatoria",
+                titulo: "Tecnico en Contabilidad.",
                 fechas: "2017-2021",
             },
         ]
@@ -124,16 +127,19 @@ export const DataCv: Curriculum[] = [
             {
                 escuela: "Universidad de Guadalajara",
                 nivel: "Licenciatura en Ingeniería en Sistemas Computacionales",
+                titulo: "",
                 fechas: "2016-2020"
             },
             {
                 escuela: "Universidad Panamericana",
                 nivel: "Maestría en Inteligencia Artificial",
+                titulo: "",
                 fechas: "2021-2023"
             },
             {
                 escuela: "Coursera / Udemy",
                 nivel: "Certificaciones Online",
+                titulo: "",
                 fechas: "2020-2023"
             }
         ],
