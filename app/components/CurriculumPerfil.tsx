@@ -9,7 +9,7 @@ export default function CurriculumPerfil({ perfil }: Props) {
     return (
         <main className="flex flex-col md:flex-row justify-start items-center w-screen gap-10">
             <div className="w-full md:w-1/3 flex justify-center">
-                <Image
+                <img
                     className="rounded-full"
                     src={"/img/perfilarturo.webp"}
                     alt="FotoPerfil"
