@@ -89,13 +89,6 @@ export const DataCv: Curriculum[] = [
                     "Revisión y análisis de registros contables",
                     "Conciliaciones bancarias",
                     "Elaboración de papeles de trabajo para auditoría",
-                    "Revisión de estados financieros",
-                    "Apoyo en cumplimiento de obligaciones fiscales",
-                    "Análisis de variaciones y control interno",
-                    "Preparación de reportes financieros",
-                    "Revisión de documentación soporte de operaciones",
-                    "Apoyo en procesos de cierre contable",
-                    "Comunicación de hallazgos y observaciones"
                 ]
             }
         ],

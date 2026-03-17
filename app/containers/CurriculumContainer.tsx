@@ -35,7 +35,7 @@ export default function CurriculumContainer({ DataCv }: Props) {
                 <section
                     key={section.id}
                     id={section.id}
-                    className="min-h-screen snap-start flex items-center justify-center px-6"
+                    className="min-h-screen snap-start flex px-6"
                 >
                     {section.component}
                 </section>
