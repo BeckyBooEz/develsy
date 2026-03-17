@@ -7,16 +7,19 @@ interface Props {
 
 export default function CurriculumPerfil({ perfil }: Props) {
     return (
-        <main className="flex flex-row justify-center items-center w-screen gap-10">
-            <div className="w-1/3">
+        <main className="flex flex-col md:flex-row justify-start items-center w-screen gap-10">
+            <div className="w-full md:w-1/3 flex justify-center">
                 <Image
+                    className="rounded-full"
                     src={"/img/perfilarturo.webp"}
                     alt="FotoPerfil"
                     width={400}
                     height={400}
-                    loading="eager" />
+                    loading="eager"
+                />
             </div>
-            <div className="flex flex-col w-2/3 gap-2 justify-center">
+
+            <div className="flex flex-col w-full md:w-2/3 gap-2 justify-center">
                 <h1 className="text-2xl">{perfil.nombre}</h1>
                 <h2>{perfil.profesion}</h2>
                 <p>{perfil.ubicacion}</p>
