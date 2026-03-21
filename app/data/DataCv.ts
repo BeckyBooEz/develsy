@@ -49,60 +49,66 @@ export const DataCv: Curriculum[] = [
     {
         id: "AMD",
         perfil: {
-            nombre: "Arturo Miranda Del carmen",
-            profesion: "Licenciatura En Contaduría Pública y Auditoría",
+            nombre: "Arturo Miranda del Carmen",
+            profesion: "Contador Público | Auditoría y Finanzas",
             correo: "Arturo.Miranda.Dev@gmail.com",
             telefono: "+52 232 220 86 35",
-            ubicacion: "Ciudad de México, México.",
-            resumen: "Soy una persona autodidacta y curiosa, siempre explorando nuevas formas de aprender y mejorar lo que hago. Disfruto investigar, experimentar con herramientas y encontrar maneras más simples y eficientes de resolver problemas. Me apasiona el aprendizaje continuo y el desarrollo constante de nuevas habilidades.",
+            ubicacion: "Ciudad de México, México",
+            resumen: "Estudiante de Contaduría Pública y Auditoría con experiencia en revisión de información financiera, conciliaciones y elaboración de papeles de trabajo. Destaco por mi capacidad analítica, atención al detalle y enfoque en la mejora de procesos mediante herramientas tecnológicas. Interesado en desarrollarme profesionalmente en auditoría y contabilidad financiera."
         },
         educacion: [
             {
-                escuela: "Benemerita Universidad Autonoma de Puebla.",
-                nivel: "Universidad",
-                titulo: "Licenciatura en Contaduría Pública y Auditoría.",
-                fechas: "2021-2025",
+                escuela: "Benemérita Universidad Autónoma de Puebla",
+                nivel: "Licenciatura",
+                titulo: "Contaduría Pública y Auditoría",
+                fechas: "2021-2025"
             },
             {
-                escuela: "Centro de Estudios Tecnológicos Industrial y de Servicios No. 145.",
-                nivel: "Preparatoria",
-                titulo: "Tecnico en Contabilidad.",
-                fechas: "2017-2021",
-            },
-        ]
-        ,
+                escuela: "Centro de Estudios Tecnológicos Industrial y de Servicios No. 145",
+                nivel: "Educación Media Superior",
+                titulo: "Técnico en Contabilidad",
+                fechas: "2017-2021"
+            }
+        ],
         experiencias: [
             {
-                entidad: "H. Ayuntamiento de Zacapoaxtla",
-                puesto: "Servicio Social y Practicas Profesionales",
-                fechas: "2023-2024",
+                entidad: "EY México",
+                puesto: "Staff de Auditoría",
+                fechas: "2025-Actualidad",
                 funciones: [
-                    "Realizar coincialiaciones de combustible",
-                    "Realizar otras pendejadas."
+                    "Revisión y análisis de registros contables",
+                    "Elaboración de conciliaciones bancarias",
+                    "Preparación de papeles de trabajo para auditoría",
+                    "Apoyo en procesos de auditoría financiera",
+                    "Validación de información contable conforme a normativa"
                 ]
             },
             {
-                entidad: "EY México",
-                puesto: "Staff asurrent",
-                fechas: "2025-Actualmente",
+                entidad: "H. Ayuntamiento de Zacapoaxtla",
+                puesto: "Servicio Social y Prácticas Profesionales",
+                fechas: "2023-2024",
                 funciones: [
-                    "Revisión y análisis de registros contables",
-                    "Conciliaciones bancarias",
-                    "Elaboración de papeles de trabajo para auditoría",
+                    "Elaboración de conciliaciones de combustible",
+                    "Apoyo en procesos administrativos y control de información",
+                    "Gestión y organización de documentación",
+                    "Seguimiento de registros y reportes internos"
                 ]
             }
         ],
         habilidades: {
             idiomas: [
-                { lengua: "Ingles", nivel: "A2" }
+                { lengua: "Inglés", nivel: "A2 (básico)" }
             ],
             blandas: [
                 "Liderazgo",
                 "Escucha activa",
+                "Trabajo en equipo",
+                "Organización",
+                "Responsabilidad"
             ],
             duras: [
-                { habilidad: "excel", nivel: "Intermadio" },
-                { habilidad: "Python", nivel: "Bajo" }
+                { habilidad: "Excel", nivel: "Intermedio" },
+                { habilidad: "Python", nivel: "Básico" }
             ]
         }
     },
