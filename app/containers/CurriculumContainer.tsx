@@ -3,6 +3,7 @@ import CurriculumEducacion from "../components/CurriculumEducacion"
 import CurriculumExperiencias from "../components/CurriculumExperiencias"
 import CurriculumHabilidades from "../components/CurriculumHabilidades"
 import CurriculumRedes from "../components/CurriculumRedes"
+import CurriculumHeader from "../components/CurriculumHeader"
 import { Curriculum } from "../data/DataCv"
 
 interface Props {
@@ -35,16 +36,20 @@ export default function CurriculumContainer({ DataCv }: Props) {
     ]
 
     return (
-        <main className="h-screen overflow-y-auto snap-y snap-mandatory scroll-smooth">
-            {sections.map((section) => (
-                <section
-                    key={section.id}
-                    id={section.id}
-                    className="min-h-screen snap-start flex px-6"
-                >
-                    {section.component}
-                </section>
-            ))}
-        </main>
+        <div className="h-screen flex flex-col">
+            <CurriculumHeader />
+
+            <main className="flex-1 overflow-y-auto snap-y snap-mandatory scroll-smooth">
+                {sections.map((section) => (
+                    <section
+                        key={section.id}
+                        id={section.id}
+                        className="min-h-full snap-start flex px-6"
+                    >
+                        {section.component}
+                    </section>
+                ))}
+            </main>
+        </div>
     )
 }
