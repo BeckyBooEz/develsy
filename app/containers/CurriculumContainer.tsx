@@ -37,8 +37,7 @@ export default function CurriculumContainer({ DataCv }: Props) {
 
     return (
         <div className="h-screen flex flex-col">
-            <CurriculumHeader />
-
+            < CurriculumHeader />
             <main className="flex-1 overflow-y-auto snap-y snap-mandatory scroll-smooth">
                 {sections.map((section) => (
                     <section
@@ -50,6 +49,6 @@ export default function CurriculumContainer({ DataCv }: Props) {
                     </section>
                 ))}
             </main>
-        </div>
+        </div >
     )
 }
