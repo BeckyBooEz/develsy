@@ -125,6 +125,7 @@ export const DataCv: Curriculum[] = [
             { red: "Whatsapp", link: "https://api.whatsapp.com/send?phone=522322208635", img: "/redes/whatsapp.svg" },
             { red: "X", link: "https://x.com/ArturoMirandaEz", img: "/redes/x.svg" },
             { red: "Spotify", link: "https://open.spotify.com/user/22rllkn5pqe35vp65sjzpsp5i?si=fab80fd3bd2e401e", img: "/redes/spotify.svg" },
+            { red: "Gmail", link: "mailto:Arturo.Miranda.Dev@gmail.com?subject=Solicitud%20de%20servicios%20de%20contaduría&body=Estimado,%0A%0AEstoy%20interesado(a)%20en%20recibir%20información%20sobre%20sus%20servicios%20de%20contaduría%20pública,%20incluyendo%20asesoría%20fiscal,%20declaraciones%20de%20impuestos%20y%20cumplimiento%20de%20obligaciones%20fiscales.%0A%0AAgradecería%20si%20pudieran%20proporcionarme%20más%20detalles%20y%20costos.%0A%0AQuedo%20atento(a)%20a%20su%20respuesta.%0A%0AGracias.", img: "/redes/gmail.svg" }
         ]
     },
     {
