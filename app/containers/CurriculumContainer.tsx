@@ -2,6 +2,7 @@ import CurriculumPerfil from "../components/CurriculumPerfil"
 import CurriculumEducacion from "../components/CurriculumEducacion"
 import CurriculumExperiencias from "../components/CurriculumExperiencias"
 import CurriculumHabilidades from "../components/CurriculumHabilidades"
+import CurriculumRedes from "../components/CurriculumRedes"
 import { Curriculum } from "../data/DataCv"
 
 interface Props {
@@ -26,7 +27,11 @@ export default function CurriculumContainer({ DataCv }: Props) {
         {
             id: "habilidades",
             component: <CurriculumHabilidades habilidades={DataCv.habilidades} />
-        }
+        },
+        {
+            id: "redes",
+            component: <CurriculumRedes redes={DataCv.redes} />
+        },
     ]
 
     return (

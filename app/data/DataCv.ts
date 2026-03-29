@@ -4,6 +4,7 @@ export interface Curriculum {
     educacion: Educacion[]
     experiencias: Experiencias[]
     habilidades: Habilidades
+    redes: Red[]
 }
 
 export interface Perfil {
@@ -43,6 +44,12 @@ export interface Idiomas {
 export interface Duras {
     habilidad: string
     nivel: string
+}
+
+export interface Red {
+    red: string
+    link: string
+    img: string
 }
 
 export const DataCv: Curriculum[] = [
@@ -110,7 +117,15 @@ export const DataCv: Curriculum[] = [
                 { habilidad: "Excel", nivel: "Intermedio" },
                 { habilidad: "Python", nivel: "Básico" }
             ]
-        }
+        },
+        redes: [
+            { red: "Instagram", link: "https://www.instagram.com/Arturo.Miranda.Ez/", img: "/redes/instagram.svg" },
+            { red: "Facebook", link: "https://www.facebook.com/Arturo.Miranda.Ez", img: "/redes/facebook.svg" },
+            { red: "Linkedin", link: "https://www.linkedin.com/in/arturomirandaez/", img: "/redes/linkedin.svg" },
+            { red: "Whatsapp", link: "https://api.whatsapp.com/send?phone=522322208635", img: "/redes/whatsapp.svg" },
+            { red: "X", link: "https://x.com/ArturoMirandaEz", img: "/redes/x.svg" },
+            { red: "Spotify", link: "https://open.spotify.com/user/22rllkn5pqe35vp65sjzpsp5i?si=fab80fd3bd2e401e", img: "/redes/spotify.svg" },
+        ]
     },
     {
         id: "LRM",
@@ -205,6 +220,10 @@ export const DataCv: Curriculum[] = [
                 { habilidad: "Git", nivel: "Intermedio" },
                 { habilidad: "Docker", nivel: "Básico" }
             ]
-        }
+        },
+        redes: [
+            { red: "Instagram", link: "", img: "" },
+            { red: "FaceBook", link: "", img: "" }
+        ]
     }
 ]

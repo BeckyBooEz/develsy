@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react";
-import CancionCard, { Cancion } from "./CancionCard";
+import CancionCard, { Cancion } from "../components/CancionCard";
 
 interface cancionContainerProps {
     canciones: Cancion[]
