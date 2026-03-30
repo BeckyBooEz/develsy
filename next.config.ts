@@ -1,13 +1,16 @@
-import { NextConfig } from 'next';
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  allowedDevOrigins: ["127.0.0.1"],
   images: {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "i.scdn.co",
-        port: "",
-        pathname: "/**",
+        hostname: "*.scdn.co",
+      },
+      {
+        protocol: "https",
+        hostname: "platform-lookaside.fbsbx.com", // 👈 agrega esto
       },
     ],
   },
