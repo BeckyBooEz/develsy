@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "platform-lookaside.fbsbx.com", // 👈 agrega esto
+        hostname: "platform-lookaside.fbsbx.com",
       },
     ],
   },

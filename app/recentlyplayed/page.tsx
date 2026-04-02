@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { cookies } from "next/headers";
 import { calcularPesosArtistas } from "@/lib/calcularArtistas";
+import { spotifyFetch } from "@/lib/spotifyFetch";
 
 interface Track {
     track: {
@@ -61,10 +62,8 @@ function convertirDuracion(durationMs: number): string {
 }
 
 export default async function RecentlyPlayed() {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
     const cookieStore = await cookies();
     const token = cookieStore.get("access_token")?.value;
-    console.log("token en /api/artists:", token ? `${token.substring(0, 20)}...` : "UNDEFINED");
 
     if (!token) {
         return (
@@ -93,15 +92,36 @@ export default async function RecentlyPlayed() {
         );
     }
 
-    const headers = { Cookie: `access_token=${token}` };
-
+    // Llamadas directas a Spotify — sin fetches internos
     const [userRes, tracksRes] = await Promise.all([
-        fetch(`${baseUrl}/api/user`, { cache: "no-store", headers }),
-        fetch(`${baseUrl}/api/recently-played`, { cache: "no-store", headers })
+        spotifyFetch("https://api.spotify.com/v1/me"),
+        spotifyFetch(`https://api.spotify.com/v1/me/player/recently-played?limit=50&before=${Date.now()}`)
     ]);
 
-    const user: User = await userRes.json();
+    if (!userRes?.ok || !tracksRes?.ok) {
+        return (
+            <div style={{
+                minHeight: "100vh",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: "#0a0a0a",
+                color: "#fff"
+            }}>
+                <p>Error al obtener datos de Spotify. <a href="/api/login" style={{ color: "#1DB954" }}>Vuelve a iniciar sesión</a></p>
+            </div>
+        );
+    }
+
+    const userData = await userRes.json();
     const tracksData = await tracksRes.json();
+
+    const user: User = {
+        name: userData.display_name,
+        email: userData.email,
+        image: userData.images?.[0]?.url ?? null,
+        followers: userData.followers?.total ?? 0
+    };
 
     const tracks: Track[] = (tracksData.items ?? []).filter(
         (item: Track, index: number, self: Track[]) =>
@@ -113,27 +133,25 @@ export default async function RecentlyPlayed() {
     const otros = artistasPeso.slice(7);
     const porcentajeOtros = otros.reduce((acc, a) => acc + a.porcentaje, 0);
 
-    const ids = top7.map(a => a.id).join(",");
-    // justo antes de este fetch
-    console.log("=== page.tsx fetch artists ===");
-    console.log("token en page:", token ? `${token.substring(0, 30)}...` : "UNDEFINED");
-    console.log("ids a enviar:", ids);
-
-    const artistsRes = await fetch(`${baseUrl}/api/artists?ids=${ids}`, {
-        cache: "no-store",
-        headers: {
-            Cookie: `access_token=${token}`
-        }
-    });
-    console.log("artists response status:", artistsRes.status);
-    const artistsData = await artistsRes.json();
-    console.log("artistsData raw:", JSON.stringify(artistsData, null, 2));
-    console.log("ids enviados:", ids);
-
+    // Fetch de artistas directo a Spotify
     const artistsMap: Record<string, ArtistData> = {};
-    (artistsData.artists ?? []).forEach((a: ArtistData) => {
-        artistsMap[a.id] = a;
-    });
+
+    if (top7.length > 0) {
+        const ids = top7.map(a => a.id).join(",");
+        const artistsRes = await spotifyFetch(`https://api.spotify.com/v1/artists?ids=${ids}`);
+
+        if (artistsRes?.ok) {
+            const artistsData = await artistsRes.json();
+            (artistsData.artists ?? []).forEach((a: any) => {
+                artistsMap[a.id] = {
+                    id: a.id,
+                    name: a.name,
+                    image: a.images?.[0]?.url ?? null,
+                    url: a.external_urls?.spotify ?? null
+                };
+            });
+        }
+    }
 
     return (
         <div style={{
@@ -169,6 +187,7 @@ export default async function RecentlyPlayed() {
                         </p>
                     </div>
                 </div>
+
                 {/* Top artistas con peso */}
                 <div>
                     <p style={{ margin: "0 0 12px", color: "#aaa", fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px" }}>
@@ -180,8 +199,7 @@ export default async function RecentlyPlayed() {
                             return (
                                 <a
                                     key={artista.id}
-                                    href={data?.url
-                                    }
+                                    href={data?.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     style={{ textDecoration: "none", color: "inherit", textAlign: "center", width: "90px" }}
@@ -231,11 +249,10 @@ export default async function RecentlyPlayed() {
                     </div>
                 </div>
 
-            </header >
+            </header>
 
             {/* Lista de canciones */}
-            < main style={{ padding: "32px" }
-            }>
+            <main style={{ padding: "32px" }}>
                 <h1 style={{ fontSize: "22px", marginBottom: "24px" }}>
                     Últimas canciones escuchadas
                     <span style={{ color: "#aaa", fontSize: "14px", fontWeight: "normal", marginLeft: "10px" }}>
@@ -309,7 +326,7 @@ export default async function RecentlyPlayed() {
                         </div>
                     ))}
                 </div>
-            </main >
-        </div >
+            </main>
+        </div>
     );
 }
