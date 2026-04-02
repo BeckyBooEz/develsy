@@ -1,4 +1,4 @@
-import CurriculumContainer from "./_curriculum/CurriculumContainer";
+import CurriculumContainer from "./_components/CurriculumContainer";
 import { DataCv } from "../data/DataCv";
 
 export default function pruebasbecky() {
