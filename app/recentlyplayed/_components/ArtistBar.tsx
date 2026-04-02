@@ -1,4 +1,5 @@
 import Image from "next/image";
+import type { ArtistBarProps } from "./types";
 
 export function ArtistBar({ top7, artistsMap, porcentajeOtros }: ArtistBarProps) {
     return (

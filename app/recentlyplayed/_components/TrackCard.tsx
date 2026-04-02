@@ -1,5 +1,7 @@
 import Image from "next/image";
 
+import type { TrackCardProps } from "./types";
+
 function calcularTiempo(played_at: string): string {
     const ahora = Date.now();
     const marcaTiempo = new Date(played_at).getTime();

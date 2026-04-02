@@ -4,6 +4,7 @@ export interface Track {
 }
 
 interface SpotifyTrack {
+    popularity: string;
     album: SpotifyAlbum;
     artists: SpotifyArtist[];
     duration_ms: number;
