@@ -1,4 +1,4 @@
-import { Experiencias } from "../data/DataCv"
+import { Experiencias } from "@/app/data/DataCv"
 
 interface Props {
     experiencias: Experiencias[]

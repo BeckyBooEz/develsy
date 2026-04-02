@@ -1,4 +1,4 @@
-import { Educacion } from "../data/DataCv"
+import { Educacion } from "@/app/data/DataCv"
 
 interface Props {
     educacion: Educacion[]

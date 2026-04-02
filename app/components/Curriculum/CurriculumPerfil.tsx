@@ -1,5 +1,4 @@
-import Image from "next/image"
-import { Perfil } from "../data/DataCv"
+import { Perfil } from "@/app/data/DataCv"
 
 interface Props {
     perfil: Perfil

@@ -1,4 +1,4 @@
-import { Habilidades } from "../data/DataCv"
+import { Habilidades } from "@/app/data/DataCv"
 
 interface Props {
     habilidades: Habilidades

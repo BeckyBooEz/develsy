@@ -1,4 +1,4 @@
-import { Red } from "../data/DataCv"
+import { Red } from "@/app/data/DataCv"
 
 interface Props {
     redes: Red[]

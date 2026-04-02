@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react";
-import CancionCard, { Cancion } from "../components/CancionCard";
+import CancionCard, { Cancion } from "../components/SpotifyTop/CancionCard";
 
 interface cancionContainerProps {
     canciones: Cancion[]

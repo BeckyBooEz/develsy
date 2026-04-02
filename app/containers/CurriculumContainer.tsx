@@ -1,9 +1,9 @@
-import CurriculumPerfil from "../components/CurriculumPerfil"
-import CurriculumEducacion from "../components/CurriculumEducacion"
-import CurriculumExperiencias from "../components/CurriculumExperiencias"
-import CurriculumHabilidades from "../components/CurriculumHabilidades"
-import CurriculumRedes from "../components/CurriculumRedes"
-import CurriculumHeader from "../components/CurriculumHeader"
+import CurriculumPerfil from "../components/Curriculum/CurriculumPerfil"
+import CurriculumEducacion from "../components/Curriculum/CurriculumEducacion"
+import CurriculumExperiencias from "../components/Curriculum/CurriculumExperiencias"
+import CurriculumHabilidades from "../components/Curriculum/CurriculumHabilidades"
+import CurriculumRedes from "../components/Curriculum/CurriculumRedes"
+import CurriculumHeader from "../components/Curriculum/CurriculumHeader"
 import { Curriculum } from "../data/DataCv"
 
 interface Props {
