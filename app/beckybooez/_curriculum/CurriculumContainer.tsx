@@ -1,10 +1,10 @@
-import CurriculumPerfil from "../components/Curriculum/CurriculumPerfil"
-import CurriculumEducacion from "../components/Curriculum/CurriculumEducacion"
-import CurriculumExperiencias from "../components/Curriculum/CurriculumExperiencias"
-import CurriculumHabilidades from "../components/Curriculum/CurriculumHabilidades"
-import CurriculumRedes from "../components/Curriculum/CurriculumRedes"
-import CurriculumHeader from "../components/Curriculum/CurriculumHeader"
-import { Curriculum } from "../data/DataCv"
+import CurriculumPerfil from "./CurriculumPerfil"
+import CurriculumEducacion from "./CurriculumEducacion"
+import CurriculumExperiencias from "./CurriculumExperiencias"
+import CurriculumHabilidades from "./CurriculumHabilidades"
+import CurriculumRedes from "./CurriculumRedes"
+import CurriculumHeader from "./CurriculumHeader"
+import { Curriculum } from "../../data/DataCv"
 
 interface Props {
     DataCv: Curriculum

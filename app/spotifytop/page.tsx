@@ -1,6 +1,6 @@
-import { Cancion } from "../components/SpotifyTop/CancionCard";
+import { Cancion } from "./_SpotifyTop/CancionCard";
 import CancionContainer from "../containers/CancionContainer"
-import Header from "../components/SpotifyTop/Header"
+import Header from "./_SpotifyTop/Header"
 import cancionesJson from "../data/DataFull.json"
 const canciones: Cancion[] = cancionesJson;
 
