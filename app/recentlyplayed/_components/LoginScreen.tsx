@@ -15,7 +15,7 @@ export function LoginScreen({ error }: LoginScreenProps) {
         }}>
             {error ? (
                 <>
-                    <p style={{ color: "#aaa" }}>{error}</p>
+                    <p style={{ color: "#e05555", margin: 0 }}>{error}</p>
                     <a href="/api/login" style={btnStyle}>
                         Volver a iniciar sesión
                     </a>

@@ -1,22 +1,21 @@
 import type { Track, ArtistaConPeso } from "./types";
 
+// Recibe tracksData.items (el array), no el objeto completo
 export function calcularArtistas(items: Track[]): ArtistaConPeso[] {
+    if (!items || items.length === 0) return [];
+
     const repeticiones: Record<string, { name: string; peso: number }> = {};
 
     items.forEach((item) => {
         const artistas = item.track.artists;
         const n = artistas.length;
 
-        // [n, n-1, ..., 1]
+        // Pesos: [n, n-1, ..., 1]
         const pesosBrutos = artistas.map((_, i) => n - i);
-
-        // suma total → n + (n-1) + ... + 1 = n*(n+1)/2
         const suma = pesosBrutos.reduce((acc, p) => acc + p, 0);
 
-        // normalizar y acumular
         artistas.forEach((artista, i) => {
             const peso = pesosBrutos[i] / suma;
-
             if (!repeticiones[artista.id]) {
                 repeticiones[artista.id] = { name: artista.name, peso: 0 };
             }

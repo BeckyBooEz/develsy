@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { unstable_cache } from "next/cache";
 import { spotifyFetch } from "@/lib/spotifyFetch";
 import { LoginScreen } from "./_components/LoginScreen";
 import { UserHeader } from "./_components/UserHeader";
@@ -6,24 +7,55 @@ import { TrackList } from "./_components/TrackList";
 import type { User, Track, ArtistData } from "./_components/types";
 import { calcularArtistas } from "./_components/calcularArtistas";
 
+const getSpotifyUser = unstable_cache(
+    async (token: string) => {
+        const res = await spotifyFetch("https://api.spotify.com/v1/me", token);
+        console.log("[page] /me status:", res?.status);
+        if (res?.status === 429) {
+            console.warn("[page] Rate limited en /me. Retry-After:", res.headers.get("Retry-After"), "s");
+        }
+        if (!res?.ok) return null;
+        return res.json();
+    },
+    ["spotify-user"],
+    { revalidate: 60 }
+);
+
+const getRecentTracks = unstable_cache(
+    async (token: string) => {
+        const before = Math.floor(Date.now() / 60000) * 60000;
+        const res = await spotifyFetch(
+            `https://api.spotify.com/v1/me/player/recently-played?limit=50&before=${before}`,
+            token
+        );
+        console.log("[page] /recently-played status:", res?.status);
+        if (res?.status === 429) {
+            console.warn("[page] Rate limited en /recently-played. Retry-After:", res.headers.get("Retry-After"), "s");
+        }
+        if (!res?.ok) return null;
+        return res.json();
+    },
+    ["spotify-tracks"],
+    { revalidate: 60 }
+);
+
 export default async function RecentlyPlayed() {
     const cookieStore = await cookies();
     const token = cookieStore.get("access_token")?.value;
-    console.log("TOKEN EN PAGE:", token ? "existe" : "no existe");
+
+    console.log("[page] Token:", token ? "existe" : "NO existe");
+
     if (!token) return <LoginScreen />;
 
-    const [userRes, tracksRes] = await Promise.all([
-        spotifyFetch("https://api.spotify.com/v1/me"),
-        spotifyFetch(`https://api.spotify.com/v1/me/player/recently-played?limit=50&before=${Date.now()}`)
+    const [userData, tracksData] = await Promise.all([
+        getSpotifyUser(token),
+        getRecentTracks(token)
     ]);
 
-    if (!userRes?.ok || !tracksRes?.ok) {
-        return <LoginScreen error="Error al obtener datos de Spotify." />;
+    if (!userData || !tracksData) {
+        // Detectar si fue rate limit específicamente
+        return <LoginScreen error="Spotify está limitando las requests temporalmente. Espera unos minutos e intenta de nuevo." />;
     }
-
-    const userData = await userRes.json();
-    const tracksData = await tracksRes.json();
-    console.log(tracksData.items[0])
 
     const user: User = {
         name: userData.display_name,
@@ -42,6 +74,7 @@ export default async function RecentlyPlayed() {
             duration_ms: item.track.duration_ms,
             external_urls: item.track.external_urls,
             type: item.track.type,
+            popularity: item.track.popularity,
             artists: item.track.artists.map((a) => ({
                 id: a.id,
                 name: a.name,
@@ -60,7 +93,8 @@ export default async function RecentlyPlayed() {
         }
     }));
 
-    const artistasPeso = calcularArtistas(tracksData);
+    // Fix: pasar tracksData.items, no tracksData completo
+    const artistasPeso = calcularArtistas(tracksData.items ?? []);
     const top7 = artistasPeso.slice(0, 7);
     const otros = artistasPeso.slice(7);
     const porcentajeOtros = otros.reduce((acc, a) => acc + a.porcentaje, 0);
@@ -69,7 +103,8 @@ export default async function RecentlyPlayed() {
 
     if (top7.length > 0) {
         const ids = top7.map(a => a.id).join(",");
-        const artistsRes = await spotifyFetch(`https://api.spotify.com/v1/artists?ids=${ids}`);
+        const artistsRes = await spotifyFetch(`https://api.spotify.com/v1/artists?ids=${ids}`, token);
+        console.log("[page] /artists status:", artistsRes?.status);
 
         if (artistsRes?.ok) {
             const artistsData = await artistsRes.json();
@@ -84,6 +119,8 @@ export default async function RecentlyPlayed() {
         }
     }
 
+    console.log("[page] Render OK — tracks:", tracks.length, "| artistas top7:", top7.length);
+
     return (
         <div style={{
             minHeight: "100vh",
@@ -97,7 +134,7 @@ export default async function RecentlyPlayed() {
                 artistsMap={artistsMap}
                 porcentajeOtros={porcentajeOtros}
             />
-            <TrackList tracks={tracks}></TrackList>
+            <TrackList tracks={tracks} />
         </div>
     );
 }

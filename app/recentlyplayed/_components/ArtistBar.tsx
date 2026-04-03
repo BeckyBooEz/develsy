@@ -20,7 +20,7 @@ export function ArtistBar({ top7, artistsMap, porcentajeOtros }: ArtistBarProps)
                     return (
                         <a
                             key={artista.id}
-                            href={data?.url}
+                            href={data?.url ?? "#"}
                             target="_blank"
                             rel="noopener noreferrer"
                             style={{
@@ -30,7 +30,7 @@ export function ArtistBar({ top7, artistsMap, porcentajeOtros }: ArtistBarProps)
                                 width: "90px"
                             }}
                         >
-                            {data?.image && (
+                            {data?.image ? (
                                 <Image
                                     src={data.image}
                                     alt={artista.name}
@@ -43,6 +43,15 @@ export function ArtistBar({ top7, artistsMap, porcentajeOtros }: ArtistBarProps)
                                         border: "2px solid #1DB954"
                                     }}
                                 />
+                            ) : (
+                                <div style={{
+                                    width: "72px",
+                                    height: "72px",
+                                    borderRadius: "50%",
+                                    background: "#1a1a1a",
+                                    border: "1px solid #333",
+                                    margin: "0 auto 6px"
+                                }} />
                             )}
                             <p style={{
                                 margin: "0 0 2px",
@@ -54,14 +63,13 @@ export function ArtistBar({ top7, artistsMap, porcentajeOtros }: ArtistBarProps)
                             }}>
                                 {artista.name}
                             </p>
-                            <p style={{ margin: "0 0 2px", fontSize: "11px", color: "#1DB954" }}>
+                            <p style={{ margin: 0, fontSize: "11px", color: "#1DB954" }}>
                                 {artista.porcentaje.toFixed(1)}%
                             </p>
                         </a>
                     );
                 })}
 
-                {/* Otros */}
                 {porcentajeOtros > 0 && (
                     <div style={{ textAlign: "center", width: "90px" }}>
                         <div style={{

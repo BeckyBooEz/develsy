@@ -1,5 +1,4 @@
 import Image from "next/image";
-
 import type { TrackCardProps } from "./types";
 
 function calcularTiempo(played_at: string): string {
@@ -29,6 +28,8 @@ function convertirDuracion(durationMs: number): string {
 }
 
 export function TrackCard({ item, index }: TrackCardProps) {
+    const albumImage = item.track.album.images[0]?.url;
+
     return (
         <div style={{
             display: "flex",
@@ -42,13 +43,15 @@ export function TrackCard({ item, index }: TrackCardProps) {
                 {index + 1}
             </span>
 
-            <Image
-                src={item.track.album.images[0]?.url}
-                alt={item.track.name}
-                width={48}
-                height={48}
-                style={{ borderRadius: "6px", flexShrink: 0 }}
-            />
+            {albumImage && (
+                <Image
+                    src={albumImage}
+                    alt={item.track.album.name}
+                    width={48}
+                    height={48}
+                    style={{ borderRadius: "6px", flexShrink: 0 }}
+                />
+            )}
 
             <div style={{ flex: 1, minWidth: 0 }}>
                 <p style={{
@@ -62,7 +65,7 @@ export function TrackCard({ item, index }: TrackCardProps) {
                     {item.track.name}
                 </p>
                 <p style={{ margin: 0, color: "#aaa", fontSize: "12px" }}>
-                    {item.track.artists[0].name} · {item.track.album.name}
+                    {item.track.artists.map(a => a.name).join(", ")} · {item.track.album.name}
                 </p>
             </div>
 
