@@ -2,7 +2,7 @@ import Image from "next/image";
 import { ArtistBar } from "./ArtistBar";
 import type { UserHeaderProps } from "./types";
 
-export function UserHeader({ user, top7, artistsMap, porcentajeOtros }: UserHeaderProps) {
+export function UserHeader({ user, top, artistsMap, porcentajeOtros }: UserHeaderProps) {
     return (
         <header style={{
             padding: "24px 32px",
@@ -22,12 +22,10 @@ export function UserHeader({ user, top7, artistsMap, porcentajeOtros }: UserHead
                     </a>
                 )}
                 <div>
-                    <h2 style={{ textTransform: "capitalize", margin: 0, fontSize: "18px" }}>
-                        {user.name}
-                        <span style={{ color: "#1DB954", fontSize: "13px", fontWeight: "normal", marginLeft: "8px" }}>
-                            {user.product}
-                        </span>
-                    </h2>
+                    <div className="flex items-center gap-2">
+                        <p className="capitalize">{user.name}</p>
+                        <p className="capitalize">{user.product}</p>
+                    </div>
                     <p style={{ margin: 0, color: "#aaa", fontSize: "13px" }}>{user.email}</p>
                     <p style={{ margin: 0, color: "#1DB954", fontSize: "12px" }}>
                         {user.followers.toLocaleString()} Seguidores
@@ -36,10 +34,10 @@ export function UserHeader({ user, top7, artistsMap, porcentajeOtros }: UserHead
             </div>
 
             <ArtistBar
-                top7={top7}
+                top={top}
                 artistsMap={artistsMap}
                 porcentajeOtros={porcentajeOtros}
             />
-        </header>
+        </header >
     );
 }

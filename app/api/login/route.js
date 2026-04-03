@@ -5,7 +5,13 @@ export async function GET() {
         `?response_type=code` +
         `&client_id=${process.env.SPOTIFY_CLIENT_ID}` +
         `&scope=${encodeURIComponent(
-            "user-read-recently-played user-top-read user-read-private user-read-email"
+            [
+                "user-read-recently-played",
+                "user-top-read",
+                "user-read-private",
+                "user-read-email",
+                "playlist-read-private"
+            ].join(" ")
         )}` +
         `&redirect_uri=${encodeURIComponent(process.env.REDIRECT_URI)}`;
 

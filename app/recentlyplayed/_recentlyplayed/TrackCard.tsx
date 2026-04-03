@@ -99,7 +99,7 @@ export function TrackCard({ item, index }: TrackCardProps) {
                     whiteSpace: "nowrap"
                 }}
             >
-                ▶ Escuchar
+                Escuchar
             </a>
         </div>
     );

@@ -1,6 +1,5 @@
 import type { Track, ArtistaConPeso } from "./types";
 
-// Recibe tracksData.items (el array), no el objeto completo
 export function calcularArtistas(items: Track[]): ArtistaConPeso[] {
     if (!items || items.length === 0) return [];
 

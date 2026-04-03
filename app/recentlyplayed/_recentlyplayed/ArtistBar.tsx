@@ -1,7 +1,7 @@
 import Image from "next/image";
 import type { ArtistBarProps } from "./types";
 
-export function ArtistBar({ top7, artistsMap, porcentajeOtros }: ArtistBarProps) {
+export function ArtistBar({ top, artistsMap, porcentajeOtros }: ArtistBarProps) {
     return (
         <div>
             <p style={{
@@ -15,7 +15,7 @@ export function ArtistBar({ top7, artistsMap, porcentajeOtros }: ArtistBarProps)
             </p>
 
             <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", alignItems: "center" }}>
-                {top7.map(artista => {
+                {top.map(artista => {
                     const data = artistsMap[artista.id];
                     return (
                         <a

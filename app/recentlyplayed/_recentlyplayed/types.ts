@@ -1,3 +1,12 @@
+export interface User {
+    name: string;
+    email: string;
+    image: string | null;
+    linkperfil: string;
+    followers: number;
+    product: string;
+}
+
 export interface Track {
     track: SpotifyTrack;
     played_at: string;
@@ -29,15 +38,6 @@ interface SpotifyArtist {
     name: string;
 }
 
-export interface User {
-    name: string;
-    email: string;
-    image: string | null;
-    linkperfil: string;
-    followers: number;
-    product: string;
-}
-
 export interface ArtistData {
     id: string;
     name: string;
@@ -52,7 +52,7 @@ export interface ArtistaConPeso {
 }
 
 export interface ArtistBarProps {
-    top7: ArtistaConPeso[];
+    top: ArtistaConPeso[];
     artistsMap: Record<string, ArtistData>;
     porcentajeOtros: number;
 }
@@ -68,7 +68,7 @@ export interface TrackCardProps {
 
 export interface UserHeaderProps {
     user: User;
-    top7: ArtistaConPeso[];
+    top: ArtistaConPeso[];
     artistsMap: Record<string, ArtistData>;
     porcentajeOtros: number;
 }

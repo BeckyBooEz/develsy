@@ -1,43 +1,11 @@
 import { cookies } from "next/headers";
-import { unstable_cache } from "next/cache";
 import { spotifyFetch } from "@/lib/spotifyFetch";
 import { LoginScreen } from "./_recentlyplayed/LoginScreen";
 import { UserHeader } from "./_recentlyplayed/UserHeader";
 import { TrackList } from "./_recentlyplayed/TrackList";
 import type { User, Track, ArtistData } from "./_recentlyplayed/types";
 import { calcularArtistas } from "./_recentlyplayed/calcularArtistas";
-
-const getSpotifyUser = unstable_cache(
-    async (token: string) => {
-        const res = await spotifyFetch("https://api.spotify.com/v1/me", token);
-        console.log("[page] /me status:", res?.status);
-        if (res?.status === 429) {
-            console.warn("[page] Rate limited en /me. Retry-After:", res.headers.get("Retry-After"), "s");
-        }
-        if (!res?.ok) return null;
-        return res.json();
-    },
-    ["spotify-user"],
-    { revalidate: 60 }
-);
-
-const getRecentTracks = unstable_cache(
-    async (token: string) => {
-        const before = Math.floor(Date.now() / 60000) * 60000;
-        const res = await spotifyFetch(
-            `https://api.spotify.com/v1/me/player/recently-played?limit=50&before=${before}`,
-            token
-        );
-        console.log("[page] /recently-played status:", res?.status);
-        if (res?.status === 429) {
-            console.warn("[page] Rate limited en /recently-played. Retry-After:", res.headers.get("Retry-After"), "s");
-        }
-        if (!res?.ok) return null;
-        return res.json();
-    },
-    ["spotify-tracks"],
-    { revalidate: 60 }
-);
+import { getSpotifyUser, getRecentTracks } from "./_recentlyplayed/queries";
 
 export default async function RecentlyPlayed() {
     const cookieStore = await cookies();
@@ -72,20 +40,17 @@ export default async function RecentlyPlayed() {
             id: item.track.id,
             name: item.track.name,
             duration_ms: item.track.duration_ms,
-            external_urls: item.track.external_urls,
+            external_urls: item.track.external_urls.spotify,
             type: item.track.type,
-            popularity: item.track.popularity,
             artists: item.track.artists.map((a) => ({
                 id: a.id,
                 name: a.name,
-                external_urls: a.external_urls
+                external_urls: a.external_urls.spotify
             })),
             album: {
-                album_type: item.track.album.album_type,
                 name: item.track.album.name,
                 release_date: item.track.album.release_date,
                 total_tracks: item.track.album.total_tracks,
-                type: item.track.album.type,
                 images: item.track.album.images.map((img) => ({
                     url: img.url
                 }))
@@ -95,20 +60,36 @@ export default async function RecentlyPlayed() {
 
     // Fix: pasar tracksData.items, no tracksData completo
     const artistasPeso = calcularArtistas(tracksData.items ?? []);
-    const top7 = artistasPeso.slice(0, 7);
-    const otros = artistasPeso.slice(7);
+    const top = artistasPeso.slice(0, 5);
+
+    const otros = artistasPeso.slice(5);
     const porcentajeOtros = otros.reduce((acc, a) => acc + a.porcentaje, 0);
 
     const artistsMap: Record<string, ArtistData> = {};
 
-    if (top7.length > 0) {
-        const ids = top7.map(a => a.id).join(",");
-        const artistsRes = await spotifyFetch(`https://api.spotify.com/v1/artists?ids=${ids}`, token);
-        console.log("[page] /artists status:", artistsRes?.status);
+    if (top.length > 0) {
+        const results = await Promise.all(
+            top.map(a =>
+                spotifyFetch(
+                    `https://api.spotify.com/v1/artists/${a.id}`,
+                    token
+                )
+            )
+        );
 
-        if (artistsRes?.ok) {
-            const artistsData = await artistsRes.json();
-            (artistsData.artists ?? []).forEach((a: any) => {
+        const artistsData = await Promise.all(
+            results.map(async (res, i) => {
+                if (!res?.ok) {
+                    console.log("Error artista:", top[i].id, res?.status);
+                    return null;
+                }
+                return res.json();
+            })
+        );
+
+        artistsData
+            .filter(Boolean)
+            .forEach((a: any) => {
                 artistsMap[a.id] = {
                     id: a.id,
                     name: a.name,
@@ -116,10 +97,9 @@ export default async function RecentlyPlayed() {
                     url: a.external_urls?.spotify ?? null
                 };
             });
-        }
     }
 
-    console.log("[page] Render OK — tracks:", tracks.length, "| artistas top7:", top7.length);
+    console.log("[page] Render OK — tracks:", tracks.length, "| artistas top:", top.length);
 
     return (
         <div style={{
@@ -130,7 +110,7 @@ export default async function RecentlyPlayed() {
         }}>
             <UserHeader
                 user={user}
-                top7={top7}
+                top={top}
                 artistsMap={artistsMap}
                 porcentajeOtros={porcentajeOtros}
             />
