@@ -7,7 +7,7 @@ export default function Header() {
             <h1 className="text-3xl mt-2 sm:mt-0 text-center">Aprendiendo TSX [Datos Estaticos]</h1>
             <div className="flex flex-row items-center gap-2.5 mt-2 sm:mt-0">
                 <p className="text-lg">Arturo Miranda</p>
-                <Image className="rounded-full" src="/img/perfilarturo.webp" alt="ArturoPerfil" width={80} height={80} />
+                <Image className="rounded-full" src="/img/perfil.png" alt="ArturoPerfil" width={80} height={80} />
             </div>
         </header>
     )
