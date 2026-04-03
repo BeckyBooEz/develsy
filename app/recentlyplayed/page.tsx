@@ -1,11 +1,11 @@
 import { cookies } from "next/headers";
 import { unstable_cache } from "next/cache";
 import { spotifyFetch } from "@/lib/spotifyFetch";
-import { LoginScreen } from "./_components/LoginScreen";
-import { UserHeader } from "./_components/UserHeader";
-import { TrackList } from "./_components/TrackList";
-import type { User, Track, ArtistData } from "./_components/types";
-import { calcularArtistas } from "./_components/calcularArtistas";
+import { LoginScreen } from "./_recentlyplayed/LoginScreen";
+import { UserHeader } from "./_recentlyplayed/UserHeader";
+import { TrackList } from "./_recentlyplayed/TrackList";
+import type { User, Track, ArtistData } from "./_recentlyplayed/types";
+import { calcularArtistas } from "./_recentlyplayed/calcularArtistas";
 
 const getSpotifyUser = unstable_cache(
     async (token: string) => {
