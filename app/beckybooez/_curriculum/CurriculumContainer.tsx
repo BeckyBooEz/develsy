@@ -19,7 +19,7 @@ export default function CurriculumContainer({ DataCv }: Props) {
         },
         {
             id: "educacion",
-            component: <CurriculumEducacion educacion={DataCv.educacion} />
+            component: <CurriculumEducacion educacion={DataCv.educacion} cursos={DataCv.cursos} />
         },
         {
             id: "experiencia",

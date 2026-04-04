@@ -4,6 +4,7 @@ export interface Curriculum {
     educacion: Educacion[]
     experiencias: Experiencias[]
     habilidades: Habilidades
+    cursos: Cursos[]
     redes: Red[]
 }
 
@@ -21,6 +22,12 @@ interface Educacion {
     nivel: string
     titulo: string
     fechas: string
+}
+
+interface Cursos {
+    nombre: string
+    institucion: string
+    fecha: string
 }
 
 interface Experiencias {

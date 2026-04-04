@@ -9,7 +9,7 @@ export default function CurriculumHeader() {
         }
     }
 
-    const btnclass = "font-bold py-1 px-2 text-xs sm:text-base rounded-full border-4 border-purple-500"
+    const btnclass = "font-bold py-1 px-2 text-xs sm:text-base border-b-2 border-b-indigo-600"
 
     return (
         <header className="w-full">
