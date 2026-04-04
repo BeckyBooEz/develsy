@@ -4,7 +4,7 @@ import CurriculumExperiencias from "./CurriculumExperiencias"
 import CurriculumHabilidades from "./CurriculumHabilidades"
 import CurriculumRedes from "./CurriculumRedes"
 import CurriculumHeader from "./CurriculumHeader"
-import { Curriculum } from "../../data/DataCv"
+import type { Curriculum } from "./types"
 
 interface Props {
     DataCv: Curriculum

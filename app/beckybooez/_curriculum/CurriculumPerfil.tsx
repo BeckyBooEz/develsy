@@ -1,7 +1,7 @@
-import { Perfil } from "@/app/data/DataCv"
+import type { Curriculum } from "./types"
 
 interface Props {
-    perfil: Perfil
+    perfil: Curriculum["perfil"]
 }
 
 export default function CurriculumPerfil({ perfil }: Props) {

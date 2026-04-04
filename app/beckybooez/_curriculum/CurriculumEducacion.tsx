@@ -1,7 +1,7 @@
-import { Educacion } from "@/app/data/DataCv"
+import type { Curriculum } from "./types"
 
 interface Props {
-    educacion: Educacion[]
+    educacion: Curriculum["educacion"]
 }
 
 export default function CurriculumEducacion({ educacion }: Props) {
