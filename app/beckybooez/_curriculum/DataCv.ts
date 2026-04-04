@@ -9,7 +9,7 @@ export const DataCv: Curriculum[] = [
             correo: "Arturo.Miranda.Dev@gmail.com",
             telefono: "+52 232 220 86 35",
             ubicacion: "Ciudad de México, México",
-            resumen: "Estudiante de Contaduría Pública y Auditoría con experiencia en revisión de información financiera, conciliaciones y elaboración de papeles de trabajo. Destaco por mi capacidad analítica, atención al detalle y enfoque en la mejora de procesos mediante herramientas tecnológicas. Interesado en desarrollarme profesionalmente en auditoría y contabilidad financiera."
+            resumen: "Contador Público con experiencia en auditoría financiera, enfocado en revisión de información contable, conciliaciones y elaboración de papeles de trabajo. Destaco por mi capacidad analítica, atención al detalle y comprensión de procesos financieros. Manejo avanzado de Excel y Power BI para análisis de datos, con conocimientos básicos en Python y SQL."
         },
         educacion: [
             {
@@ -31,11 +31,12 @@ export const DataCv: Curriculum[] = [
                 puesto: "Staff de Auditoría",
                 fechas: "2025-Actualidad",
                 funciones: [
-                    "Revisión y análisis de registros contables",
-                    "Elaboración de conciliaciones bancarias",
-                    "Preparación de papeles de trabajo para auditoría",
-                    "Apoyo en procesos de auditoría financiera",
-                    "Validación de información contable conforme a normativa"
+                    "Análisis y revisión de registros contables para validar su correcta aplicación conforme a normativa vigente",
+                    "Elaboración y depuración de conciliaciones bancarias, identificando variaciones y proponiendo ajustes",
+                    "Preparación de papeles de trabajo estructurados para soportar procedimientos de auditoría",
+                    "Apoyo en la ejecución de pruebas sustantivas y de control en auditorías financieras",
+                    "Validación de la integridad, consistencia y razonabilidad de la información financiera",
+                    "Uso de herramientas digitales para organización, análisis y seguimiento de información",
                 ]
             },
             {
@@ -43,10 +44,10 @@ export const DataCv: Curriculum[] = [
                 puesto: "Servicio Social y Prácticas Profesionales",
                 fechas: "2023-2024",
                 funciones: [
-                    "Elaboración de conciliaciones de combustible",
-                    "Apoyo en procesos administrativos y control de información",
-                    "Gestión y organización de documentación",
-                    "Seguimiento de registros y reportes internos"
+                    "Elaboración y control de conciliaciones operativas (combustible), asegurando consistencia en registros",
+                    "Apoyo en actividades administrativas y procesos de control interno",
+                    "Organización, clasificación y resguardo de documentación institucional",
+                    "Seguimiento y actualización de reportes internos para control y supervisión"
                 ]
             }
         ],
@@ -55,15 +56,18 @@ export const DataCv: Curriculum[] = [
                 { lengua: "Inglés", nivel: "A2 (básico)" }
             ],
             blandas: [
-                "Liderazgo",
-                "Escucha activa",
+                "Pensamiento analítico",
+                "Atención al detalle",
+                "Resolución de problemas",
                 "Trabajo en equipo",
-                "Organización",
-                "Responsabilidad"
+                "Comunicación efectiva",
+                "Organización y gestión del tiempo"
             ],
             duras: [
-                { habilidad: "Excel", nivel: "Intermedio" },
-                { habilidad: "Python", nivel: "Básico" }
+                { habilidad: "Microsoft Excel (Análisis de datos, tablas dinámicas y funciones avanzadas)", nivel: "Avanzado" },
+                { habilidad: "Power BI (Modelado de datos y visualización)", nivel: "Intermedio" },
+                { habilidad: "Python (Manipulación y análisis básico de datos)", nivel: "Básico" },
+                { habilidad: "SQL (Fundamentos de consultas y bases de datos relacionales)", nivel: "Básico" }
             ]
         },
         redes: [
