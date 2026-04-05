@@ -7,16 +7,12 @@ interface Props {
 export default function CurriculumRedes({ redes }: Props) {
     return (
         <div className="flex flex-col w-full">
-
-            {/* Título consistente */}
             <div className="flex items-center gap-3 mt-4">
                 <h2 className="text-xs font-medium uppercase tracking-widest text-gray-400 whitespace-nowrap">
                     Redes
                 </h2>
                 <span className="flex-1 h-px bg-indigo-600" />
             </div>
-
-            {/* Contenedor */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mt-4">
 
                 {redes.map((red, index) => (
@@ -32,7 +28,6 @@ export default function CurriculumRedes({ redes }: Props) {
                             group
                         "
                     >
-                        {/* Icono */}
                         <div className="
                             w-10 h-10 flex items-center justify-center
                             rounded-full bg-indigo-100
@@ -40,15 +35,22 @@ export default function CurriculumRedes({ redes }: Props) {
                         ">
                             <img src={red.img} alt={red.red} className="w-5 h-5" />
                         </div>
-
-                        {/* Nombre */}
                         <span className="text-sm text-gray-700 group-hover:text-indigo-600">
                             {red.red}
                         </span>
                     </a>
                 ))}
-
             </div>
-        </div>
+            <div className="w-full flex justify-center p-40">
+                <a href="\CV_ArturoMiranda.pdf" download="CV_ArturoMiranda.pdf">
+                    <button className="rounded-lg border border-gray-200
+                            hover:border-indigo-400 hover:bg-indigo-50
+                            transition-all duration-200
+                            group">
+                        Descargar CV
+                    </button>
+                </a>
+            </div>
+        </div >
     )
 }
