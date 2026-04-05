@@ -3,11 +3,11 @@
 import { useState, useEffect } from "react"
 
 const secciones = [
-    { id: "perfil",      label: "Perfil" },
-    { id: "educacion",   label: "Educación" },
+    { id: "perfil", label: "Perfil" },
+    { id: "educacion", label: "Educación" },
     { id: "experiencia", label: "Experiencia" },
     { id: "habilidades", label: "Habilidades" },
-    { id: "redes",       label: "Redes" },
+    { id: "redes", label: "Redes" },
 ]
 
 export default function CurriculumHeader() {
