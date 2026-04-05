@@ -10,7 +10,7 @@ export default function CurriculumPerfil({ perfil }: Props) {
             <div className="w-full md:w-1/3 flex justify-center">
                 <img
                     className="rounded-full"
-                    src={"/img/perfil.png"}
+                    src={"/img/perfilprofesional.png"}
                     alt="FotoPerfil"
                     width={400}
                     height={400}
