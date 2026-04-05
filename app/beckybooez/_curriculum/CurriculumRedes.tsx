@@ -6,20 +6,49 @@ interface Props {
 
 export default function CurriculumRedes({ redes }: Props) {
     return (
-        <main className="flex flex-col w-full">
-            <h1>Redes sociales</h1>
-            <div className="grid gap-2 grid-cols-1 md:flex md:gap-4 md:justify-center">
-                {redes.map((red, index) => (
-                    <ul key={index} >
-                        <li className="bg-indigo-600 p-3 rounded-full flex items-center gap-1">
-                            <a href={red.link}>
-                                <img src={red.img} alt="" width={50} height={50} />
-                            </a>
-                            <p className="pl-2">{red.red}</p>
-                        </li>
-                    </ul>
-                ))}
+        <div className="flex flex-col w-full">
+
+            {/* Título consistente */}
+            <div className="flex items-center gap-3 mt-4">
+                <h2 className="text-xs font-medium uppercase tracking-widest text-gray-400 whitespace-nowrap">
+                    Redes
+                </h2>
+                <span className="flex-1 h-px bg-indigo-600" />
             </div>
-        </main>
+
+            {/* Contenedor */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mt-4">
+
+                {redes.map((red, index) => (
+                    <a
+                        key={index}
+                        href={red.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="
+                            flex items-center gap-3 p-3 rounded-lg border border-gray-200
+                            hover:border-indigo-400 hover:bg-indigo-50
+                            transition-all duration-200
+                            group
+                        "
+                    >
+                        {/* Icono */}
+                        <div className="
+                            w-10 h-10 flex items-center justify-center
+                            rounded-full bg-indigo-100
+                            group-hover:bg-indigo-200
+                        ">
+                            <img src={red.img} alt={red.red} className="w-5 h-5" />
+                        </div>
+
+                        {/* Nombre */}
+                        <span className="text-sm text-gray-700 group-hover:text-indigo-600">
+                            {red.red}
+                        </span>
+                    </a>
+                ))}
+
+            </div>
+        </div>
     )
 }
