@@ -9,11 +9,11 @@ export default function CurriculumPerfil({ perfil }: Props) {
         <main className="flex flex-col md:flex-row justify-start items-center w-screen gap-6">
             <div className="w-full md:w-1/3 flex justify-center">
                 <img
-                    className="rounded-full"
+                    className="rounded-full w-60 h-80 md:w-80 md:h-120 object-cover"
                     src={"/img/perfilprofesional.png"}
                     alt="FotoPerfil"
-                    width={400}
-                    height={400}
+                    width={200}
+                    height={300}
                     loading="eager"
                 />
             </div>
