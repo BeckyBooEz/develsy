@@ -1,17 +1,43 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 const secciones = [
-    { id: "perfil", label: "Perfil" },
-    { id: "educacion", label: "Educación" },
+    { id: "perfil",      label: "Perfil" },
+    { id: "educacion",   label: "Educación" },
     { id: "experiencia", label: "Experiencia" },
     { id: "habilidades", label: "Habilidades" },
-    { id: "redes", label: "Redes" },
+    { id: "redes",       label: "Redes" },
 ]
 
 export default function CurriculumHeader() {
     const [activo, setActivo] = useState("perfil")
+
+    useEffect(() => {
+        const main = document.querySelector("main")
+        if (!main) return
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        setActivo(entry.target.id)
+                    }
+                })
+            },
+            {
+                root: main,       // scroll container, no el window
+                threshold: 0.5,   // marca cuando la sección ocupa >50% del viewport
+            }
+        )
+
+        secciones.forEach(({ id }) => {
+            const el = document.getElementById(id)
+            if (el) observer.observe(el)
+        })
+
+        return () => observer.disconnect()
+    }, [])
 
     const scrollTo = (id: string) => {
         const main = document.querySelector("main")
@@ -19,7 +45,6 @@ export default function CurriculumHeader() {
         if (main && target) {
             main.scrollTo({ top: target.offsetTop, behavior: "smooth" })
         }
-        setActivo(id)
     }
 
     return (
