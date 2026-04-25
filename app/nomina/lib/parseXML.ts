@@ -25,6 +25,9 @@ export function parseXML(text: string): Omit<Registro, "archivo"> | null {
   const nomina = queryNS(doc, NS_NOMINA, "Nomina");
   if (!nomina) return null;
 
+  // TipoNomina: "O" = Ordinaria, "E" = Extraordinaria
+  const tipoNomina = nomina.getAttribute("TipoNomina") ?? "O";
+
   // ── Percepciones ───────────────────────────────────────────────────────────
   const percepcionesNode = queryNS(doc, NS_NOMINA, "Percepciones");
 
@@ -77,6 +80,7 @@ export function parseXML(text: string): Omit<Registro, "archivo"> | null {
     fecha,
     mes,
     emisor,
+    tipoNomina,
     totalSueldos,
     totalGravado,
     totalExento,

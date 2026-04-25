@@ -36,12 +36,12 @@ export default function DropZone({ onFiles }: Props) {
         className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
         onChange={(e) => { if (e.target.files) onFiles(e.target.files); }}
       />
-      <div className="text-4xl mb-3">BeckyBooEz</div>
+      <div className="text-4xl mb-3">📂</div>
       <p className="text-zinc-300 font-semibold text-sm">
         Arrastra tus XMLs aquí o haz clic para seleccionarlos
       </p>
       <p className="text-zinc-600 text-xs mt-1">
-        SAT → Factura electrónica → Consulta de CFDI → Tipo: Nómina → 2025
+        SAT → Factura electrónica → Consulta de CFDI → Tipo: Nómina → 2024
       </p>
     </div>
   );

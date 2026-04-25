@@ -12,7 +12,8 @@ import Banner400k        from "./components/Banner400k";
 import ResumenCards      from "./components/ResumenCards";
 import TablaMeses        from "./components/TablaMeses";
 import TablaPercepciones from "./components/TablaPercepciones";
-import AmarreTable       from "./components/AmarreTable";
+import AmarreTable                from "./components/AmarreTable";
+import TablaRetencionesPeriodicas from "./components/TablaRetencionesPeriodicas";
 
 export default function NominaAnalyzer() {
   const [registros, setRegistros] = useState<Registro[]>([]);
@@ -60,6 +61,24 @@ export default function NominaAnalyzer() {
   const totalExento  = registros.reduce((s, r) => s + r.totalExento,  0);
   const totalISR     = registros.reduce((s, r) => s + r.totalISR,     0);
 
+  // ── ISR anual calculado (tabla Art. 152) ──────────────────────────────────
+  const TABLA_ISR_ANUAL = [
+    { li: 0.01,         ls: 8_952.49,       cf: 0.00,          pct: 1.92  },
+    { li: 8_952.50,     ls: 75_984.55,      cf: 171.88,        pct: 6.40  },
+    { li: 75_984.56,    ls: 133_536.07,     cf: 4_461.94,      pct: 10.88 },
+    { li: 133_536.08,   ls: 155_229.80,     cf: 10_723.55,     pct: 16.00 },
+    { li: 155_229.81,   ls: 185_852.57,     cf: 14_194.54,     pct: 17.92 },
+    { li: 185_852.58,   ls: 374_837.88,     cf: 19_682.13,     pct: 21.36 },
+    { li: 374_837.89,   ls: 590_795.99,     cf: 60_049.40,     pct: 23.52 },
+    { li: 590_796.00,   ls: 1_127_926.84,   cf: 110_842.74,    pct: 30.00 },
+    { li: 1_127_926.85, ls: 1_503_902.46,   cf: 271_981.99,    pct: 32.00 },
+    { li: 1_503_902.47, ls: 4_511_707.37,   cf: 392_294.17,    pct: 34.00 },
+    { li: 4_511_707.38, ls: Infinity,       cf: 1_414_947.85,  pct: 35.00 },
+  ];
+  const rangoAnual  = TABLA_ISR_ANUAL.find((r) => totalGravado >= r.li && totalGravado <= r.ls)
+    ?? TABLA_ISR_ANUAL[TABLA_ISR_ANUAL.length - 1];
+  const isrAnual = (totalGravado - rangoAnual.li) * (rangoAnual.pct / 100) + rangoAnual.cf;
+
   // ── Agrupación por mes ─────────────────────────────────────────────────────
   const porMes: ResumenMes[] = MESES
     .map((nombre, idx) => {
@@ -106,7 +125,7 @@ export default function NominaAnalyzer() {
       <header className="border-b border-zinc-800 px-6 py-5 flex items-center justify-between">
         <div>
           <h1 className="text-xl font-bold tracking-tight text-white">
-            Analizador de Nóminas SAT
+            📋 Analizador de Nóminas SAT
           </h1>
           <p className="text-zinc-500 text-xs mt-0.5">
             Carga tus CFDIs XML · Todo se procesa localmente
@@ -150,6 +169,8 @@ export default function NominaAnalyzer() {
             <TablaPercepciones percepciones={percepcionesPorTipo} />
 
             <AmarreTable totalGravado={totalGravado} totalISR={totalISR} />
+
+            <TablaRetencionesPeriodicas registros={registros} isrAnual={isrAnual} isrRetenido={totalISR} />
           </>
         )}
 

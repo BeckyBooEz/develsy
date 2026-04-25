@@ -96,6 +96,7 @@ export interface Registro {
   fecha: string;
   mes: number;         // 0-based
   emisor: string;
+  tipoNomina: string;  // "O" = Ordinaria, "E" = Extraordinaria
   // Totales del nodo Percepciones
   totalSueldos: number;
   totalGravado: number;

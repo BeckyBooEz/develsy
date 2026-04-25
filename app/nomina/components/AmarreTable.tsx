@@ -118,7 +118,7 @@ export default function AmarreTable({ totalGravado, totalISR }: Props) {
 
       <div>
         <h2 className="text-sm font-semibold text-zinc-300">
-          Amarre para Declaración Anual
+          🧾 Amarre para Declaración Anual
         </h2>
         <p className="text-zinc-600 text-xs mt-0.5">
           Cálculo con tabla Art. 152 LISR (2024 / 2025)
@@ -156,7 +156,7 @@ export default function AmarreTable({ totalGravado, totalISR }: Props) {
         <div>
           <p className={`text-xs font-bold uppercase tracking-wider mb-0.5
             ${c.esSaldoAFavor ? "text-emerald-400" : "text-red-400"}`}>
-            {c.esSaldoAFavor ? "Saldo a favor" : "Saldo a cargo"}
+            {c.esSaldoAFavor ? "✅ Saldo a favor" : "⚠️ Saldo a cargo"}
           </p>
           <p className={`text-xs ${c.esSaldoAFavor ? "text-emerald-300/70" : "text-red-300/70"}`}>
             {c.esSaldoAFavor
@@ -170,7 +170,7 @@ export default function AmarreTable({ totalGravado, totalISR }: Props) {
       </div>
 
       <p className="text-zinc-600 text-xs">
-        Este es un estimado <strong className="text-zinc-500">sin deducciones personales</strong> (médicos,
+        💡 Este es un estimado <strong className="text-zinc-500">sin deducciones personales</strong> (médicos,
         colegiaturas, etc.). Si agregas deducciones, tu saldo a favor puede ser mayor.
       </p>
     </div>
