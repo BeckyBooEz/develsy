@@ -13,6 +13,9 @@ export default function Home() {
       <div>
         <Link className="underline" href={"/recentlyplayed"}>RecientesSpotify</Link>
       </div>
+      <div>
+        <Link className="underline" href={"/nomina"}>Analizador de Nomina</Link>
+      </div>
     </main>
   );
 }

@@ -13,7 +13,7 @@ export default function CurriculumRedes({ redes }: Props) {
                 </h2>
                 <span className="flex-1 h-px bg-indigo-600" />
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mt-4">
+            <div className="grid grid-cols-2 gap-3 ms:grid-cols-1">
 
                 {redes.map((red, index) => (
                     <a
