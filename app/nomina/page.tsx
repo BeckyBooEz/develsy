@@ -2,116 +2,24 @@
 
 import { useState, useCallback } from "react";
 
-interface Registro {
-  archivo: string;
-  fecha: string;
-  mes: number;
-  totalSueldos: number;
-  totalISR: number;
-  emisor: string;
-}
+import { Registro, ResumenMes, ResumenTipoPercepcion, NOMBRE_PERCEPCION } from "./lib/types";
+import { MESES } from "./lib/utils";
+import { parseXML } from "./lib/parseXML";
 
-interface ResumenMes {
-  nombre: string;
-  sueldos: number;
-  isr: number;
-  cfdi: number;
-}
-
-const MESES = [
-  "Enero","Febrero","Marzo","Abril","Mayo","Junio",
-  "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre",
-];
-
-const NS_CFDI   = "http://www.sat.gob.mx/cfd/4";
-const NS_NOMINA = "http://www.sat.gob.mx/nomina12";
-
-// ── helpers ────────────────────────────────────────────────────────────────────
-
-function fmt(n: number): string {
-  return new Intl.NumberFormat("es-MX", {
-    style: "currency",
-    currency: "MXN",
-    minimumFractionDigits: 2,
-  }).format(n);
-}
-
-function queryNS(root: Document | Element, ns: string, localName: string): Element | null {
-  const col = root.getElementsByTagNameNS(ns, localName);
-  if (col.length > 0) return col[0];
-  const wild = root.getElementsByTagNameNS("*", localName);
-  return wild.length > 0 ? wild[0] : null;
-}
-
-function queryAllNS(root: Document | Element, ns: string, localName: string): Element[] {
-  const col = root.getElementsByTagNameNS(ns, localName);
-  if (col.length > 0) return Array.from(col);
-  return Array.from(root.getElementsByTagNameNS("*", localName));
-}
-
-function parseXML(text: string): Omit<Registro, "archivo"> | null {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(text, "application/xml");
-
-  if (doc.querySelector("parsererror")) return null;
-
-  // Comprobante
-  const comprobante = queryNS(doc, NS_CFDI, "Comprobante");
-  if (!comprobante) return null;
-
-  // Solo tipo Nómina
-  const tipo = comprobante.getAttribute("TipoDeComprobante");
-  if (tipo && tipo !== "N") return null;
-
-  const fecha = comprobante.getAttribute("Fecha") ?? "";
-  const mes   = fecha ? new Date(fecha).getMonth() : 0;
-
-  // Emisor
-  const emisorNode = queryNS(doc, NS_CFDI, "Emisor");
-  const emisor = emisorNode?.getAttribute("Nombre") ?? "Emisor desconocido";
-
-  // Nómina
-  const nomina = queryNS(doc, NS_NOMINA, "Nomina");
-  if (!nomina) return null;
-
-  // TotalSueldos viene de nomina12:Percepciones → atributo TotalSueldos
-  const percepciones = queryNS(doc, NS_NOMINA, "Percepciones");
-  const totalSueldos = parseFloat(
-    percepciones?.getAttribute("TotalSueldos") ??
-    nomina.getAttribute("TotalPercepciones") ??
-    "0"
-  );
-
-  // ISR: nomina12:Deduccion con TipoDeduccion="002"
-  let totalISR = 0;
-  const deducciones = queryNS(doc, NS_NOMINA, "Deducciones");
-  if (deducciones) {
-    const deduccionNodes = queryAllNS(deducciones, NS_NOMINA, "Deduccion");
-    deduccionNodes.forEach((d) => {
-      if (d.getAttribute("TipoDeduccion") === "002") {
-        totalISR += parseFloat(d.getAttribute("Importe") ?? "0");
-      }
-    });
-    // Fallback al atributo TotalImpuestosRetenidos
-    if (totalISR === 0) {
-      totalISR = parseFloat(
-        deducciones.getAttribute("TotalImpuestosRetenidos") ?? "0"
-      );
-    }
-  }
-
-  return { fecha, mes, totalSueldos, totalISR, emisor };
-}
-
-// ── componente ─────────────────────────────────────────────────────────────────
+import DropZone          from "./components/DropZone";
+import ErrorList         from "./components/ErrorList";
+import Banner400k        from "./components/Banner400k";
+import ResumenCards      from "./components/ResumenCards";
+import TablaMeses        from "./components/TablaMeses";
+import TablaPercepciones from "./components/TablaPercepciones";
+import AmarreTable       from "./components/AmarreTable";
 
 export default function NominaAnalyzer() {
   const [registros, setRegistros] = useState<Registro[]>([]);
   const [errores, setErrores]     = useState<string[]>([]);
-  const [dragging, setDragging]   = useState(false);
 
-  const procesarArchivos = useCallback((files: FileList | null) => {
-    if (!files) return;
+  // ── Procesar archivos ──────────────────────────────────────────────────────
+  const procesarArchivos = useCallback((files: FileList) => {
     const nuevosErrores: string[] = [];
 
     const promesas = Array.from(files).map(
@@ -146,34 +54,55 @@ export default function NominaAnalyzer() {
     });
   }, []);
 
-  const onDrop = useCallback(
-    (e: React.DragEvent<HTMLDivElement>) => {
-      e.preventDefault();
-      setDragging(false);
-      procesarArchivos(e.dataTransfer.files);
-    },
-    [procesarArchivos]
+  // ── Totales globales ───────────────────────────────────────────────────────
+  const totalSueldos = registros.reduce((s, r) => s + r.totalSueldos, 0);
+  const totalGravado = registros.reduce((s, r) => s + r.totalGravado, 0);
+  const totalExento  = registros.reduce((s, r) => s + r.totalExento,  0);
+  const totalISR     = registros.reduce((s, r) => s + r.totalISR,     0);
+
+  // ── Agrupación por mes ─────────────────────────────────────────────────────
+  const porMes: ResumenMes[] = MESES
+    .map((nombre, idx) => {
+      const delMes = registros.filter((r) => r.mes === idx);
+      return {
+        nombre,
+        sueldos: delMes.reduce((s, r) => s + r.totalSueldos, 0),
+        isr:     delMes.reduce((s, r) => s + r.totalISR,     0),
+        cfdi:    delMes.length,
+      };
+    })
+    .filter((m) => m.cfdi > 0);
+
+  // ── Agrupación por tipo de percepción ──────────────────────────────────────
+  const percepcionesMap = new Map<string, ResumenTipoPercepcion>();
+  registros.forEach((r) => {
+    r.percepciones.forEach((p) => {
+      const existing = percepcionesMap.get(p.tipo);
+      if (existing) {
+        existing.gravado += p.gravado;
+        existing.exento  += p.exento;
+        existing.total   += p.gravado + p.exento;
+      } else {
+        percepcionesMap.set(p.tipo, {
+          tipo:     p.tipo,
+          concepto: NOMBRE_PERCEPCION[p.tipo] ?? p.concepto,
+          gravado:  p.gravado,
+          exento:   p.exento,
+          total:    p.gravado + p.exento,
+        });
+      }
+    });
+  });
+  const percepcionesPorTipo = Array.from(percepcionesMap.values()).sort(
+    (a, b) => b.total - a.total
   );
 
-  const porMes: ResumenMes[] = MESES.map((nombre, idx) => {
-    const delMes = registros.filter((r) => r.mes === idx);
-    return {
-      nombre,
-      sueldos: delMes.reduce((s, r) => s + r.totalSueldos, 0),
-      isr:     delMes.reduce((s, r) => s + r.totalISR, 0),
-      cfdi:    delMes.length,
-    };
-  }).filter((m) => m.cfdi > 0);
-
-  const totalSueldos = registros.reduce((s, r) => s + r.totalSueldos, 0);
-  const totalISR     = registros.reduce((s, r) => s + r.totalISR, 0);
-  const supera400k   = totalSueldos > 400_000;
-
-  const limpiar = () => { setRegistros([]); setErrores([]); };
+  const hayDatos = registros.length > 0;
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100 font-mono">
 
+      {/* Header */}
       <header className="border-b border-zinc-800 px-6 py-5 flex items-center justify-between">
         <div>
           <h1 className="text-xl font-bold tracking-tight text-white">
@@ -183,9 +112,9 @@ export default function NominaAnalyzer() {
             Carga tus CFDIs XML · Todo se procesa localmente
           </p>
         </div>
-        {registros.length > 0 && (
+        {hayDatos && (
           <button
-            onClick={limpiar}
+            onClick={() => { setRegistros([]); setErrores([]); }}
             className="text-xs text-zinc-500 hover:text-red-400 transition-colors border border-zinc-700 hover:border-red-800 px-3 py-1.5 rounded"
           >
             Limpiar todo
@@ -193,152 +122,38 @@ export default function NominaAnalyzer() {
         )}
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+      <main className="max-w-5xl mx-auto px-4 py-8 space-y-8">
 
-        {/* Drop zone */}
-        <div
-          onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
-          onDragLeave={() => setDragging(false)}
-          onDrop={onDrop}
-          className={`relative border-2 border-dashed rounded-xl p-10 text-center transition-all cursor-pointer
-            ${dragging
-              ? "border-emerald-500 bg-emerald-950/30"
-              : "border-zinc-700 hover:border-zinc-500 bg-zinc-900/50"
-            }`}
-        >
-          <input
-            type="file"
-            multiple
-            accept=".xml"
-            className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
-            onChange={(e) => procesarArchivos(e.target.files)}
-          />
-          <div className="text-4xl mb-3">Ez</div>
-          <p className="text-zinc-300 font-semibold text-sm">
-            Arrastra tus XMLs aquí o haz clic para seleccionarlos
-          </p>
-          <p className="text-zinc-600 text-xs mt-1">
-            SAT → Factura electrónica → Consulta de CFDI → Tipo: Nómina → 2025
-          </p>
-        </div>
+        <DropZone onFiles={procesarArchivos} />
 
-        {/* Errores */}
-        {errores.length > 0 && (
-          <div className="bg-red-950/40 border border-red-800 rounded-lg p-4 space-y-1">
-            <p className="text-red-400 text-xs font-bold uppercase tracking-wider mb-2">
-              ⚠ Archivos con problemas
-            </p>
-            {errores.map((e, i) => (
-              <p key={i} className="text-red-300 text-xs">{e}</p>
-            ))}
-          </div>
-        )}
+        <ErrorList errores={errores} />
 
-        {registros.length > 0 && (
+        {hayDatos && (
           <>
-            {/* Banner 400k */}
-            <div className={`rounded-xl px-5 py-4 flex items-center justify-between
-              ${supera400k
-                ? "bg-amber-950/50 border border-amber-700"
-                : "bg-emerald-950/50 border border-emerald-800"
-              }`}>
-              <div>
-                <p className={`text-xs font-bold uppercase tracking-wider mb-0.5
-                  ${supera400k ? "text-amber-400" : "text-emerald-400"}`}>
-                  {supera400k
-                    ? "⚠ Supera $400,000 — Obligado a declarar"
-                    : "✅ No supera $400,000"}
-                </p>
-                <p className={`text-xs ${supera400k ? "text-amber-300/70" : "text-emerald-300/70"}`}>
-                  {supera400k
-                    ? "Debes presentar tu Declaración Anual 2024 ante el SAT"
-                    : "Podrías no estar obligado (revisa otros supuestos)"}
-                </p>
-              </div>
-              <span className={`text-2xl font-bold ${supera400k ? "text-amber-400" : "text-emerald-400"}`}>
-                {fmt(totalSueldos)}
-              </span>
-            </div>
+            <Banner400k totalSueldos={totalSueldos} />
 
-            {/* Cards */}
-            <div className="grid grid-cols-3 gap-4">
-              {[
-                { label: "Total Ingresos",     value: fmt(totalSueldos), color: "text-white" },
-                { label: "Total ISR Retenido", value: fmt(totalISR),     color: "text-blue-400" },
-                { label: "CFDIs cargados",     value: registros.length,  color: "text-zinc-300" },
-              ].map((card) => (
-                <div key={card.label} className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
-                  <p className="text-zinc-500 text-xs mb-1">{card.label}</p>
-                  <p className={`text-lg font-bold ${card.color}`}>{card.value}</p>
-                </div>
-              ))}
-            </div>
+            <ResumenCards
+              totalSueldos={totalSueldos}
+              totalGravado={totalGravado}
+              totalExento={totalExento}
+              totalISR={totalISR}
+              totalCFDIs={registros.length}
+            />
 
-            {/* Tabla por mes */}
-            <div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden">
-              <div className="px-5 py-3 border-b border-zinc-800">
-                <h2 className="text-sm font-semibold text-zinc-300">Desglose mes a mes</h2>
-              </div>
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="text-zinc-500 text-xs uppercase tracking-wider">
-                    <th className="px-5 py-3 text-left">Mes</th>
-                    <th className="px-5 py-3 text-right">Ingresos</th>
-                    <th className="px-5 py-3 text-right">ISR Retenido</th>
-                    <th className="px-5 py-3 text-right">CFDIs</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {porMes.map((m, i) => (
-                    <tr key={m.nombre}
-                      className={`border-t border-zinc-800/60 hover:bg-zinc-800/40 transition-colors
-                        ${i % 2 === 0 ? "" : "bg-zinc-900/50"}`}>
-                      <td className="px-5 py-3 text-zinc-200">{m.nombre}</td>
-                      <td className="px-5 py-3 text-right text-white font-medium">{fmt(m.sueldos)}</td>
-                      <td className="px-5 py-3 text-right text-blue-400">{fmt(m.isr)}</td>
-                      <td className="px-5 py-3 text-right text-zinc-500">{m.cfdi}</td>
-                    </tr>
-                  ))}
-                </tbody>
-                <tfoot>
-                  <tr className="border-t-2 border-zinc-700 bg-zinc-800/60">
-                    <td className="px-5 py-3 font-bold text-zinc-200">TOTAL</td>
-                    <td className="px-5 py-3 text-right font-bold text-white">{fmt(totalSueldos)}</td>
-                    <td className="px-5 py-3 text-right font-bold text-blue-400">{fmt(totalISR)}</td>
-                    <td className="px-5 py-3 text-right font-bold text-zinc-400">{registros.length}</td>
-                  </tr>
-                </tfoot>
-              </table>
-            </div>
+            <TablaMeses
+              porMes={porMes}
+              totalSueldos={totalSueldos}
+              totalISR={totalISR}
+              totalCFDIs={registros.length}
+            />
 
-            {/* Amarre */}
-            <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5">
-              <h2 className="text-sm font-semibold text-zinc-300 mb-4">Amarre para Declaración Anual</h2>
-              <div className="space-y-3">
-                {[
-                  { label: "Ingresos acumulados",    value: fmt(totalSueldos), note: "Base antes de deducciones personales" },
-                  { label: "ISR retenido por patrón", value: fmt(totalISR),    note: "Lo que ya pagaste durante el año" },
-                  { label: "ISR calculado anual",    value: "— SAT lo calcula", note: "Tabla anual de ISR en la declaración" },
-                  { label: "Saldo a favor / cargo",  value: "— Resultado final", note: "ISR retenido menos ISR calculado" },
-                ].map((row) => (
-                  <div key={row.label}
-                    className="flex items-center justify-between py-2 border-b border-zinc-800/60 last:border-0">
-                    <div>
-                      <p className="text-zinc-300 text-sm">{row.label}</p>
-                      <p className="text-zinc-600 text-xs">{row.note}</p>
-                    </div>
-                    <span className="text-white font-bold text-sm">{row.value}</span>
-                  </div>
-                ))}
-              </div>
-              <p className="text-zinc-600 text-xs pt-4">
-                Lleva estos números al portal del SAT y agrega deducciones personales para obtener el saldo final.
-              </p>
-            </div>
+            <TablaPercepciones percepciones={percepcionesPorTipo} />
+
+            <AmarreTable totalGravado={totalGravado} totalISR={totalISR} />
           </>
         )}
 
-        {registros.length === 0 && errores.length === 0 && (
+        {!hayDatos && errores.length === 0 && (
           <div className="text-center py-12 text-zinc-600 text-sm">
             <p>Aún no has cargado ningún XML.</p>
             <p className="text-xs mt-1">Descárgalos del SAT y arrástralos arriba.</p>
