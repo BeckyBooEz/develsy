@@ -4,16 +4,10 @@ interface Props {
     habilidades: Curriculum["habilidades"]
 }
 
-const nivelColor: Record<string, string> = {
-    "Avanzado": "bg-indigo-600",
-    "Intermedio": "bg-indigo-300",
-    "Básico": "bg-gray-300",
-}
-
-const nivelTexto: Record<string, string> = {
-    "Avanzado": "text-indigo-600",
-    "Intermedio": "text-indigo-300",
-    "Básico": "text-gray-400",
+const nivelBadge: Record<string, string> = {
+    "Avanzado": "bg-indigo-100 text-indigo-700",
+    "Intermedio": "bg-indigo-50 text-indigo-400",
+    "Básico": "bg-gray-100 text-gray-400",
 }
 
 export default function CurriculumHabilidades({ habilidades }: Props) {
@@ -26,62 +20,67 @@ export default function CurriculumHabilidades({ habilidades }: Props) {
                 <span className="flex-1 h-px bg-indigo-600" />
             </div>
 
-            <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-x-6 gap-y-4 mt-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
 
-                {/* Técnicas */}
-                <div>
-                    <p className="text-[10px] font-medium uppercase tracking-widest text-gray-400 mb-2.5">
-                        Técnicas
-                    </p>
-                    <div className="flex flex-col gap-1.5">
+                {/* Card Técnicas */}
+                <div className="border border-gray-200 rounded-lg overflow-hidden">
+                    <div className="px-4 py-3 border-b border-gray-100">
+                        <p className="text-[10px] font-medium uppercase tracking-widest text-gray-400">
+                            Técnicas
+                        </p>
+                    </div>
+                    <div className="px-4 py-3 flex flex-col gap-2">
                         {habilidades.duras.map((dura, index) => (
-                            <div key={index} className="flex items-center gap-2">
-                                <span className={`w-2 h-2 rounded-full shrink-0 ${nivelColor[dura.nivel] ?? "bg-gray-300"}`} />
-                                <span className={`text-xs ${nivelTexto[dura.nivel] === "text-gray-400" ? "text-gray-400" : "text-gray-700"}`}>
-                                    {dura.habilidad}
+                            <div key={index} className="flex items-center justify-between gap-3">
+                                <span className="text-xs text-gray-600">{dura.habilidad}</span>
+                                <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full whitespace-nowrap shrink-0 min-w-24 text-center ${nivelBadge[dura.nivel] ?? "bg-gray-100 text-gray-400"}`}>
+                                    {dura.nivel}
                                 </span>
                             </div>
                         ))}
                     </div>
-
-                    {/* Leyenda */}
-                    <div className="flex gap-3 mt-3">
-                        {Object.entries(nivelColor).map(([nivel, color]) => (
-                            <div key={nivel} className="flex items-center gap-1.5">
-                                <span className={`w-1.5 h-1.5 rounded-full ${color}`} />
-                                <span className="text-[10px] text-gray-400">{nivel}</span>
-                            </div>
-                        ))}
-                    </div>
                 </div>
 
-                {/* Blandas + Idiomas */}
-                <div>
-                    <p className="text-[10px] font-medium uppercase tracking-widest text-gray-400 mb-2.5">
-                        Blandas
-                    </p>
-                    <div className="grid grid-cols-2 gap-x-3 gap-y-1">
-                        {habilidades.blandas.map((habilidad, index) => (
-                            <span key={index} className="text-xs text-gray-500">
-                                {habilidad}
-                            </span>
-                        ))}
+                {/* Columna derecha */}
+                <div className="flex flex-col gap-3">
+
+                    {/* Card Blandas */}
+                    <div className="border border-gray-200 rounded-lg overflow-hidden">
+                        <div className="px-4 py-3 border-b border-gray-100">
+                            <p className="text-[10px] font-medium uppercase tracking-widest text-gray-400">
+                                Blandas
+                            </p>
+                        </div>
+                        <div className="px-4 py-3 grid grid-cols-2 gap-x-4 gap-y-1.5">
+                            {habilidades.blandas.map((habilidad, index) => (
+                                <div key={index} className="flex items-center gap-1.5">
+                                    <span className="w-1 h-1 rounded-full bg-indigo-400 shrink-0" />
+                                    <span className="text-xs text-gray-500">{habilidad}</span>
+                                </div>
+                            ))}
+                        </div>
                     </div>
 
-                    <p className="text-[10px] font-medium uppercase tracking-widest text-gray-400 mt-4 mb-2.5">
-                        Idiomas
-                    </p>
-                    <div className="flex flex-col gap-1.5">
-                        {habilidades.idiomas.map((idioma, index) => (
-                            <div key={index} className="flex items-center gap-2">
-                                <span className="w-2 h-2 rounded-full shrink-0 bg-indigo-300" />
-                                <span className="text-xs text-gray-700">{idioma.lengua}</span>
-                                <span className="text-xs text-gray-400">· {idioma.nivel}</span>
-                            </div>
-                        ))}
+                    {/* Card Idiomas */}
+                    <div className="border border-gray-200 rounded-lg overflow-hidden">
+                        <div className="px-4 py-3 border-b border-gray-100">
+                            <p className="text-[10px] font-medium uppercase tracking-widest text-gray-400">
+                                Idiomas
+                            </p>
+                        </div>
+                        <div className="px-4 py-3 flex flex-col gap-2">
+                            {habilidades.idiomas.map((idioma, index) => (
+                                <div key={index} className="flex items-center justify-between gap-3">
+                                    <span className="text-xs text-gray-600">{idioma.lengua}</span>
+                                    <span className="text-[10px] font-medium px-2 py-0.5 rounded-full whitespace-nowrap shrink-0 min-w-24 text-center bg-gray-100 text-gray-400">
+                                        {idioma.nivel}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
                     </div>
+
                 </div>
-
             </div>
         </div>
     )

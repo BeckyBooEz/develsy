@@ -18,18 +18,18 @@ export default function CurriculumExperiencias({ experiencias }: Props) {
                 {experiencias.map((experiencia, index) => (
                     <div key={index} className="border border-gray-200 rounded-lg overflow-hidden">
 
-                        <div className="flex justify-between items-start flex-wrap gap-2 px-4 py-3 border-b border-gray-100">
+                        <div className="flex justify-between items-start gap-2 px-4 py-3 border-b border-gray-100">
                             <div>
                                 <p className="text-sm font-medium">{experiencia.entidad}</p>
                                 <p className="text-xs text-gray-500 mt-0.5">{experiencia.puesto}</p>
                             </div>
                             <span className={`
-                                text-[10px] font-medium px-2 py-0.5 rounded-full whitespace-nowrap
-                                ${index === 0
+                                text-[10px] font-medium px-2 py-0.5 rounded-full whitespace-nowrap shrink-0 min-w-40 text-center
+                                 ${index === 0
                                     ? "bg-indigo-50 text-indigo-700"
                                     : "bg-gray-100 text-gray-500"
                                 }
-                            `}>
+                                `}>
                                 {experiencia.fechas}
                             </span>
                         </div>
