@@ -82,6 +82,8 @@ export const DataCv: Curriculum[] = [
             { nombre: "Charla: Prepárate para una emergencia", institucion: "BBVA", fecha: "Marzo 2024" },
             { nombre: "Congreso: Potenciando al Emprendedor", institucion: "BUAP", fecha: "Marzo 2024" },
             { nombre: "Curso de Front-End Development", institucion: "DEVF", fecha: "Diciembre 2024" },
+            { nombre: "Python + SQL + Tableau: Integrating Python, SQL, and Tableau", institucion: "Udemy — 365 Careers", fecha: "Febrero 2026" },
+            { nombre: "Statistics/Data Analysis in SPSS: Inferential Statistics", institucion: "Udemy — Quantitative Specialists", fecha: "Mayo 2026" },
         ],
         redes: [
             { red: "Instagram", link: "https://www.instagram.com/Arturo.Miranda.Ez/", img: "/redes/instagram.svg" },
