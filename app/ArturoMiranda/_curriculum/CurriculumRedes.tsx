@@ -41,16 +41,6 @@ export default function CurriculumRedes({ redes }: Props) {
                     </a>
                 ))}
             </div>
-            <div className="w-full flex justify-center p-40">
-                <a href="/Curriculum_Arturo_Miranda.pdf" download="cv.pdf">
-                    <button className="rounded-lg border border-gray-200
-                            hover:border-indigo-400 hover:bg-indigo-50
-                            transition-all duration-200
-                            group">
-                        Descargar CV
-                    </button>
-                </a>
-            </div>
         </div >
     )
 }
