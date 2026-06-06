@@ -88,7 +88,7 @@ export const DataCv: Curriculum[] = [
             { red: "Tiktok", link: "https://www.tiktok.com/@arturo.miranda.ez", img: "/redes/tiktok.svg" },
             { red: "Spotify", link: "https://open.spotify.com/user/22rllkn5pqe35vp65sjzpsp5i?si=fab80fd3bd2e401e", img: "/redes/spotify.svg" },
             { red: "Steam", link: "https://steamcommunity.com/profiles/76561198334664881/", img: "/redes/steam.svg" },
-            { red: "Dicord", link: "https://discord.gg/sXpuyXdbvg", img:"/redes/discord.svg"}
+            { red: "Discord", link: "https://discord.gg/sXpuyXdbvg", img:"/redes/discord.svg"}
         ],
     },
 ]
