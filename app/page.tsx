@@ -9,7 +9,7 @@ export default function Home() {
           Develsy
         </h1>
 
-        <Link href="/ArturoMiranda">Arturo Miranda</Link>
+        <Link href="/ArturoMiranda">Arturo Miranda Ez</Link>
 
         <div className="mt-10 text-sm text-slate-400">
           © {new Date().getFullYear()} Develsy
