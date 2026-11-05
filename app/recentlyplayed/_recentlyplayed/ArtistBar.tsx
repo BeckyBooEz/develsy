@@ -37,6 +37,9 @@ export function ArtistBar({ top, artistsMap, porcentajeOtros }: ArtistBarProps) 
                                     width={72}
                                     height={72}
                                     style={{
+                                        width: "72px",
+                                        height: "72px",
+                                        objectFit: "cover",
                                         borderRadius: "50%",
                                         display: "block",
                                         margin: "0 auto 6px",
